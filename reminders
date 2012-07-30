@@ -1,0 +1,59 @@
+REM Mon 15 Jan MSG Martin Luther King's Birthday Holiday
+REM Mon 1 June --7 MSG Memorial Day Holiday
+REM 1 July +30 MSG Floating Holidays must be taken by June 30, [year(today())+1]
+REM Mon 1 Sept MSG Labor Day Holiday
+REM Thu 22 Nov MSG Thanksgiving Day Holiday
+REM Fri 22 Nov MSG Thanksgiving Holiday
+REM 1 Dec OMIT Sat Sun AFTER MSG Half-Day Holiday Preparation Holiday to be used in December
+
+# New Year's Day
+REM 1 Jan SCANFROM [trigger(today()-7)] SATISFY 1
+
+IF WKDAYNUM(TRIGDATE()) == 6
+  REM [TRIGGER(TRIGDATE())] MSG New Year's Day (actual)
+  OMIT [TRIGGER(TRIGDATE()-1)] MSG New Year's Day (observed)
+ELSE
+  IF WKDAYNUM(TRIGDATE()) == 0
+    REM [TRIGGER(TRIGDATE())] MSG New Year's Day (actual)
+    OMIT [TRIGGER(TRIGDATE()+1)] MSG New Year's Day (observed)
+  ELSE
+    OMIT [TRIGGER(TRIGDATE())] MSG New Year's Day Holiday
+  ENDIF
+ENDIF
+
+# New Year's Eve
+REM 1 Jan -1 OMIT Sat Sun MSG New Year's Eve Half-Day Holiday
+
+# Independence Day
+REM 4 July SCANFROM [trigger(today()-7)] SATISFY 1
+
+IF WKDAYNUM(TRIGDATE()) == 6
+  REM [TRIGGER(TRIGDATE())] MSG Independence Day (actual)
+  OMIT [TRIGGER(TRIGDATE()-1)] MSG Independence day (observed)
+ELSE
+  IF WKDAYNUM(TRIGDATE()) == 0
+    REM [TRIGGER(TRIGDATE())] MSG Independence Day (actual)
+    OMIT [TRIGGER(TRIGDATE()+1)] MSG Independence day (observed)
+  ELSE
+    OMIT [TRIGGER(TRIGDATE())] MSG Independence Day Holiday
+  ENDIF
+ENDIF
+
+# Christmas Day
+REM 25 Dec SCANFROM [trigger(today()-7)] SATISFY 1
+
+IF WKDAYNUM(TRIGDATE()) == 6
+  REM [TRIGGER(TRIGDATE())] MSG Christmas Day (actual)
+  OMIT [TRIGGER(TRIGDATE()-1)] MSG Christmas Day (holiday)
+ELSE
+  IF WKDAYNUM(TRIGDATE()) == 0
+    REM [TRIGGER(TRIGDATE())] MSG Christmas Day (actual)
+    OMIT [TRIGGER(TRIGDATE()+1)] MSG Christmas Day (holiday)
+  ELSE
+    OMIT [TRIGGER(TRIGDATE())] MSG Christmas Day Holiday
+  ENDIF
+ENDIF
+
+# Christmas Eve
+REM 25 Dec -1 OMIT Sat Sun MSG Christmas Eve Half-Day Holiday
+
