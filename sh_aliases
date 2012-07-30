@@ -1,3 +1,5 @@
+# ~/.sh_aliases
+
 # User-specific aliases to be used in a bash or zsh session
 
 alias sudo='PATH=/usr/kerberos/bin:/usr/local/bin:/bin:/usr/bin:/home/sbrown/bin:/usr/kerberos/sbin:/usr/local/sbin:/usr/sbin:/sbin /usr/bin/sudo'
