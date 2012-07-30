@@ -17,6 +17,10 @@ bindkey "\e[Z" reverse-menu-complete # Shift+Tab
 bindkey "^[[A" history-beginning-search-backward # Up
 bindkey "^[[B" history-beginning-search-forward # Down
 
+# Autoload zsh functions.
+fpath=(~/.zsh/functions $fpath)
+autoload -U ~/.zsh/functions/*(:t)
+
 # Source zsh specific functions
 if [ -f ~/.zsh_functions ]; then
     source ~/.zsh_functions
