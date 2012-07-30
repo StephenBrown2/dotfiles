@@ -1,0 +1,8 @@
+# ~/.zsh_functions
+
+# Function to source bash files
+# Taken from http://unix.stackexchange.com/a/3449
+source_sh () {
+  emulate -LR sh
+  . "$@"
+}

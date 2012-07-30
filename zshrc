@@ -17,3 +17,17 @@ bindkey "\e[Z" reverse-menu-complete # Shift+Tab
 bindkey "^[[A" history-beginning-search-backward # Up
 bindkey "^[[B" history-beginning-search-forward # Down
 
+# Source zsh specific functions
+if [ -f ~/.zsh_functions ]; then
+    source ~/.zsh_functions
+fi
+
+# Source generic aliases
+if [ -f ~/.sh_aliases ]; then
+    source_sh ~/.sh_aliases
+fi
+
+# Source zsh specific aliases
+if [ -f ~/.zsh_aliases ]; then
+    source ~/.zsh_aliases
+fi
