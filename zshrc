@@ -14,8 +14,8 @@ bindkey "\eOd" emacs-backward-word
 bindkey "\e\e[C" forward-word
 bindkey "\e\e[D" backward-word
 bindkey "\e[Z" reverse-menu-complete # Shift+Tab
-bindkey "^[[A" history-beginning-search-backward # Up
-bindkey "^[[B" history-beginning-search-forward # Down
+#bindkey "^[[A" history-beginning-search-backward # Up
+#bindkey "^[[B" history-beginning-search-forward # Down
 
 # Autoload zsh functions.
 fpath=(~/.zsh/functions $fpath)
