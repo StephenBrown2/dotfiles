@@ -21,5 +21,5 @@ and I have a set up identical to all my other systems. Of course, if the system 
 
 ```shell
 git clone git clone https://github.com/StephenBrown2/dotfiles.git ~/.dotfiles
-~/dot-files/create-links
+~/.dotfiles/create-links
 ```
