@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# Source: https://github.com/garybernhardt/dotfiles/blob/master/.githelpers
+# Modified to work with older sed (without -E option)
+#
+# Log output:
+#
+# * 51c333e    (12 days)    <Gary Bernhardt>   add vim-eunuch
+#
+# The time massaging regexes start with ^[^<]* because that ensures that they
+# only operate before the first "<". That "<" will be the beginning of the
+# author name, ensuring that we don't destroy anything in the commit message
+# that looks like time.
+#
+# The log format uses } characters between each field, and `column` is later
+# used to split on them. A } in the commit subject or any other field will
+# break this.
+
+HASH="%C(yellow)%h%C(reset)"
+RELATIVE_TIME="%C(green)(%ar)%C(reset)"
+AUTHOR="%C(bold blue)%an%C(reset)"
+REFS="%C(red)%d%C(reset)"
+SUBJECT="%s"
+
+FORMAT="$HASH}$RELATIVE_TIME}$AUTHOR}$REFS $SUBJECT"
+
+show_git_head() {
+    pretty_git_log -1
+    git show -p --pretty="tformat:"
+}
+
+function pretty_git_log() {
+   git log --pretty="tformat:$FORMAT" $* |
+   sed -e 's/\(^[^<]*\) ago)/\1)/' |
+   sed -e 's/\(^[^<]*\), [[:digit:]] .*months\?)/\1+)/' |
+   column -t -s '}' |
+   less -FXRS
+}
