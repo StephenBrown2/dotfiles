@@ -2,7 +2,20 @@
 
 # User-specific aliases to be used in a bash or zsh session
 
-alias sudo='PATH=/usr/kerberos/bin:/usr/local/bin:/bin:/usr/bin:/home/sbrown/bin:/usr/kerberos/sbin:/usr/local/sbin:/usr/sbin:/sbin /usr/bin/sudo'
-
-# Yes, I misspell git a lot.
+alias sudo='PATH=$PATH:/usr/local/bin:/usr/local/sbin:/bin:/usr/bin:/sbin:/usr/sbin /usr/bin/sudo'
 alias gti='git '
+alias rm='rm -i'
+alias cx='clear'
+alias cp='cp -i'
+alias mv='mv -i'
+alias allcron='cut -d: -f1 /etc/passwd | grep -vE "#" | xargs -i{} crontab -u{} -l'
+alias hist='history | less'
+alias cdv='cd /var/www'
+alias cdd='cd /etc/init.d'
+alias httpdconf='cd /usr/local/httpd/httpd-2.2.17/conf/'
+alias httpdbin='cd /usr/local/httpd/httpd-2.2.17/bin/'
+alias alist='alias'
+alias motd='cat /etc/motd'
+alias lss='pwd & ls -liAh'
+alias cdd='cd $1 & ls -liAh'
+alias matrix='echo -ne "\e[32m" ; while true ; do echo -ne "\e[$(($RANDOM % 2 ));32m\]" ; tr -c "[:print:]" " " < /dev/urandom | dd count=1 bs=50 2> /dev/null ; done'
