@@ -6,3 +6,8 @@ source_sh () {
   emulate -LR sh
   . "$@"
 }
+
+# Though not technically a function,
+# this is probably a good place to put it
+# Ref: https://github.com/olivierverdier/zsh-git-prompt
+source ~/.zsh/git-prompt/zshrc.sh
