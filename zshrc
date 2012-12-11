@@ -35,3 +35,8 @@ fi
 if [ -f ~/.zsh_aliases ]; then
     source ~/.zsh_aliases
 fi
+
+# Source zsh specific prompt
+if [ -f ~/.zsh_prompt ]; then
+	source ~/.zsh_prompt
+fi

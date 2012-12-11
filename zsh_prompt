@@ -1,0 +1,5 @@
+# ~/.zsh_prompt
+
+export PROMPT='%B%{$fg[blue]%}[%{$fg[green]%}%n%{$fg[cyan]%}@%{$fg[green]%}%m%{$fg[blue]%}]%b%{${reset_color}%} %# '
+
+export RPROMPT=' %B%{$fg[yellow]%}$(fish_dir -l)%b%{${reset_color}%} $(git_super_status) %{$fg[red]%}[%{$fg[cyan]%}%D{%a %b %d %T}%{$fg[red]%}]%{${reset_color}%}'
