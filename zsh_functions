@@ -1,5 +1,59 @@
 # ~/.zsh_functions
 
+# Taken from http://askubuntu.com/questions/1577/moving-from-bash-to-zsh
+
+# More extensive tab completion (necessary for fish_dir tab completion)
+autoload -U compinit
+compinit
+
+# Tab completion from both ends
+setopt completeinword
+
+# Tab completion should be case-insensitive
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
+# Better completion for killall.
+zstyle ':completion:*:killall:*' command 'ps -u $USER -o cmd'
+
+# Changes the definition of "word", e.g. with ^W
+autoload select-word-style
+select-word-style shell
+
+# History file options
+HISTFILE=~/.bash_history
+HISTSIZE=SAVEHIST=10000
+setopt incappendhistory
+setopt sharehistory
+setopt extendedhistory
+
+# Glob options
+setopt extendedglob
+unsetopt caseglob
+
+# Remember command in history without executing
+setopt interactivecomments
+
+# cd to dir without using cd
+setopt auto_cd
+
+# Display CPU usage stats for commands taking more than 10 seconds
+REPORTTIME=10
+
+# Insert sudo at beginning of line with a keystroke
+insert_sudo     () { zle beginning-of-line; zle -U "sudo "         }
+zle -N insert-sudo      insert_sudo
+bindkey "^k" insert-sudo
+
+# Function to add dir in history upon changing dir
+add-zsh-hook precmd precmd_add_dir_to_history
+precmd_add_dir_to_history () {
+  if [ "$LAST_DIR" != "$PWD" ]
+    then
+      print -s "##dir## $PWD"
+      LAST_DIR=$PWD
+  fi
+}
+
 # Function to source bash files
 # Taken from http://unix.stackexchange.com/a/3449
 source_sh () {
