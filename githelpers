@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Source: https://gist.github.com/2521741
 # An improved (although heavily obfuscated) version of @garybernhardt's
 # git pretty log, show in Destroy All Software №63.
 # Original source: https://github.com/garybernhardt/dotfiles/blob/master/.githelpers
