@@ -3,7 +3,7 @@ REM Mon 1 June --7 MSG Memorial Day Holiday
 REM 1 July +30 MSG Floating Holidays must be taken by June 30, [year(today())+1]
 REM Mon 1 Sept MSG Labor Day Holiday
 REM Thu 22 Nov MSG Thanksgiving Day Holiday
-REM Fri 22 Nov MSG Thanksgiving Holiday
+REM Thu 22 Nov OMIT Thu AFTER MSG Thanksgiving Holiday
 REM 1 Dec OMIT Sat Sun AFTER MSG Half-Day Holiday Preparation Holiday to be used in December
 
 # New Year's Day
@@ -23,6 +23,21 @@ ENDIF
 
 # New Year's Eve
 REM 1 Jan -1 OMIT Sat Sun MSG New Year's Eve Half-Day Holiday
+
+# Presidents' Day
+REM 18 Feb SCANFROM [trigger(today()-7)] SATISFY 1
+
+IF WKDAYNUM(TRIGDATE()) == 6
+  REM [TRIGGER(TRIGDATE())] MSG Presidents' Day (actual)
+  OMIT [TRIGGER(TRIGDATE()-1)] MSG Presidents' Day (float) (observed)
+ELSE
+  IF WKDAYNUM(TRIGDATE()) == 0
+    REM [TRIGGER(TRIGDATE())] MSG Presidents' Day (actual)
+    OMIT [TRIGGER(TRIGDATE()+1)] MSG Presidents' Day (float) (observed)
+  ELSE
+    OMIT [TRIGGER(TRIGDATE())] MSG Presidents' Day Holiday (float)
+  ENDIF
+ENDIF
 
 # Independence Day
 REM 4 July SCANFROM [trigger(today()-7)] SATISFY 1
