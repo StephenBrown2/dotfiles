@@ -53,6 +53,6 @@
   hp = "!source ~/.githelpers && show_git_head"
   r = !git l -30
   ra = !git r --all
-  le = "!source ~/.githelpers && git_log_pretty"
+  l = "!source ~/.githelpers && git_log_pretty"
   la = !git l --all
   lg = !git l --graph
