@@ -45,6 +45,7 @@ zle -N insert-sudo      insert_sudo
 bindkey "^k" insert-sudo
 
 # Function to add dir in history upon changing dir
+autoload -U add-zsh-hook
 add-zsh-hook precmd precmd_add_dir_to_history
 precmd_add_dir_to_history () {
   if [ "$LAST_DIR" != "$PWD" ]
