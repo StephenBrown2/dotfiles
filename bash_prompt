@@ -19,3 +19,6 @@ if [ -f /etc/git-completion.bash ]; then
 else
   export PS1="$BLUE╭[$GREEN\u$CYAN@$GREEN\H$BLUE:$YELLOW\w$BLUE] $RED[$CYAN\T on \d$RED]$OFF\n$BLUE╰─\$> $OFF"
 fi
+
+# Stick changed directory in history
+PROMPT_COMMAND='if [ "$LAST_DIR" != "$PWD" ]; then history -s "##dir## $PWD"; LAST_DIR=$PWD; fi'
