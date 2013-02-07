@@ -26,6 +26,11 @@ if [ -f ~/.zsh_functions ]; then
     source ~/.zsh_functions
 fi
 
+# Source bash specific functions
+if [ -f ~/.bash_functions ]; then
+    source_sh ~/.bash_functions
+fi
+
 # Source generic aliases
 if [ -f ~/.sh_aliases ]; then
     source_sh ~/.sh_aliases
