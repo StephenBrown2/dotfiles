@@ -8,8 +8,7 @@ if [ -f ~/.bashrc ]; then
     source ~/.bashrc
 fi
 
-# User specific environment and startup programs
-
-PATH=$PATH:$HOME/bin
-
-export PATH
+# Source environment variables
+if [ -f ~/.sh_env_vars ]; then
+    source ~/.sh_env_vars
+fi

@@ -41,7 +41,12 @@ if [ -f ~/.zsh_aliases ]; then
     source ~/.zsh_aliases
 fi
 
+# Source environment variables
+if [ -f ~/.sh_env_vars ]; then
+    source ~/.sh_env_vars
+fi
+
 # Source zsh specific prompt
 if [ -f ~/.zsh_prompt ]; then
-	source ~/.zsh_prompt
+    source ~/.zsh_prompt
 fi
