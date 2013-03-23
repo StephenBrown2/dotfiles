@@ -8,6 +8,27 @@
 for file in [a-zA-Z]* ; do
     if [[ "$file" != "create-links" && "$file" != "README" && "$file" != "README.md" ]] ; then
 
+        if [[ "$file" == "bin" ]]; then
+            if [[ ! -d ~/bin || ! -h ~/bin ]] ; then
+                ln -s `pwd`/bin ~/;
+            elif [[ -d ~/bin && ! -h ~/bin ]]; then
+                for binfile in bin/[a-zA-Z]* ; do
+                if [[ -h ~/"$binfile" ]] ; then
+                    echo "  Removing symbolic link ~/$binfile"
+                    rm ~/"$binfile"
+                elif [[ -a ~/"$binfile" ]] ; then
+                    date=$(date '+%FT%T');
+                    echo "  ~/$binfile exists. Moving it to ~/$binfile.back.$date"
+                    mv ~/"$binfile" ~/"$binfile".back.$date || echo "Couldn't move ~/$binfile to ~/$binfile.back.$date!"
+                fi
+
+                echo "ln -s `pwd`/\"$binfile\" ~/\"$binfile\"" && echo "Linked ~/$binfile to `pwd`/$binfile" || echo "Couldn't link ~/$binfile to `pwd`/$binfile!"
+                #ln -s `pwd`/bin/"$binfile" ~/bin/"$binfile" && echo "Linked ~/bin/$binfile to `pwd`/bin/$binfile" || echo "Couldn't link ~/bin/$binfile to `pwd`/bin/$binfile!"
+                done
+            fi
+            continue
+        fi
+
         if [[ -h ~/."$file" ]] ; then
             echo "  Removing symbolic link ~/.$file"
             rm ~/."$file"

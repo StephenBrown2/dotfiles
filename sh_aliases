@@ -1,5 +1,8 @@
 # ~/.sh_aliases
 
+# Add paths
+export PATH="$HOME/bin:$PATH"
+
 # User-specific aliases to be used in a bash or zsh session
 
 alias sudo='PATH=$PATH:/usr/local/bin:/usr/local/sbin:/bin:/usr/bin:/sbin:/usr/sbin /usr/bin/sudo'
