@@ -46,7 +46,6 @@ endif
 set nohlsearch                  " turn off highlighting for searched expressions
 set incsearch                   " highlight as we search however
 set matchtime=5                 " blink matching chars for .x seconds
-set mouse=a                     " try to use a mouse in the console (wimp!)
 set ignorecase                  " set case insensitivity
 set smartcase                   " unless there's a capital letter
 set completeopt=menu,longest,preview " more autocomplete <Ctrl>-P options
