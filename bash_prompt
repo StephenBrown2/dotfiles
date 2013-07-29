@@ -11,9 +11,6 @@ OFF="\[\e[0m\]"
 # Source git completion
 if [ -f /etc/git-completion.bash ]; then
   source /etc/git-completion.bash
-  export GIT_PS1_SHOWDIRTYSTATE=1
-  export GIT_PS1_SHOWUPSTREAM="auto"
-  export GIT_PS1_SHOWUNTRACKEDFILES=1
   GIT_INFO='$(__git_ps1 " (± %s)")'
   export PS1="$BLUE╭[$GREEN\u$CYAN@$GREEN\H$BLUE:$YELLOW\w$BLUE]$GIT_INFO $RED[$CYAN\d \t$RED]$OFF\n$BLUE╰─\$> $OFF"
 else
