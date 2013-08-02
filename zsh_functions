@@ -1,5 +1,15 @@
 # ~/.zsh_functions
 
+# Initialize colors.
+autoload -U colors
+colors
+
+# Allow for functions in the prompt.
+setopt PROMPT_SUBST
+
+# Allow for checking the version of ZSH
+autoload -U is-at-least
+
 # Taken from http://askubuntu.com/questions/1577/moving-from-bash-to-zsh
 
 # More extensive tab completion (necessary for fish_dir tab completion)
@@ -65,4 +75,4 @@ source_sh () {
 # Though not technically a function,
 # this is probably a good place to put it
 # Ref: https://github.com/olivierverdier/zsh-git-prompt
-source ~/.zsh/git-prompt/zshrc.sh
+# source ~/.zsh/git-prompt/zshrc.sh

@@ -210,10 +210,18 @@ __git_ps1_show_upstream ()
 __git_ps1_colorize_gitstring ()
 {
 	if [[ -n ${ZSH_VERSION-} ]]; then
-		local c_red='%F{red}'
-		local c_green='%F{green}'
-		local c_lblue='%F{blue}'
-		local c_clear='%f'
+		autoload -U is-at-least
+		if is-at-least 4.3.6; then
+			local c_red='%F{red}'
+			local c_green='%F{green}'
+			local c_lblue='%F{blue}'
+			local c_clear='%f'
+		else
+			local c_red='%{$fg[red]%}'
+			local c_green='%{$fg[green]%}'
+			local c_lblue='%{$fg[blue]%}'
+			local c_clear='%{$reset_color%}'
+		fi
 	else
 		# Using \[ and \] around colors is necessary to prevent
 		# issues with command line editing/browsing/completion!
