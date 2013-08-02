@@ -76,3 +76,8 @@ source_sh () {
 # this is probably a good place to put it
 # Ref: https://github.com/olivierverdier/zsh-git-prompt
 # source ~/.zsh/git-prompt/zshrc.sh
+
+# Though not technically a function,
+# this is probably a good place to put it
+# Ref: https://github.com/zsh-users/zsh-syntax-highlighting
+is-at-least 4.3.9 && source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
