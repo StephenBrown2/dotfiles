@@ -31,3 +31,20 @@ alias motd='cat /etc/motd'
 alias lss='pwd & ls -liAh'
 alias cdd='cd $1 & ls -liAh'
 alias matrix='echo -ne "\e[32m" ; while true ; do echo -ne "\e[$(($RANDOM % 2 ));32m\]" ; tr -c "[:print:]" " " < /dev/urandom | dd count=1 bs=50 2> /dev/null ; done'
+
+function fix-ssh-perms {
+    user=$1
+    sudo ls /home/${user}/.ssh 2>&1 >/dev/null
+    if [ $? -eq 0 ]; then
+        echo "Fixing permissions for user:'${user}'"
+        sudo chown -R ${user}:${user} /home/${user}/.ssh
+        sudo chmod 700 /home/${user}/.ssh
+        sudo chmod 600 /home/${user}/.ssh/id_rsa
+        sudo chmod 644 /home/${user}/.ssh/id_rsa.pub
+        sudo chmod 644 /home/${user}/.ssh/authorized_keys
+        sudo chmod 644 /home/${user}/.ssh/known_hosts
+    else
+        echo "No ~/.ssh dir found for user:'${user}'"
+    fi;
+}
+
