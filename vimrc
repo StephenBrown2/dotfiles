@@ -126,3 +126,9 @@ autocmd FileType python setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4 
 "------ END VIM-500 ------"
 
 endif " version >= 500
+
+" Allow saving of files as sudo when I forgot to start vim using sudo.
+cmap w!! w !sudo /usr/bin/tee > /dev/null %
+
+" Why hasn't this been set by default yet?
+set paste

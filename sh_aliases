@@ -24,13 +24,24 @@ alias d8ts='date +%FT%T | sed "s/:/-/g"'
 alias hist='history | less'
 alias cdv='cd /var/www'
 alias cdd='cd /etc/init.d'
-alias httpdconf='cd /usr/local/httpd/httpd-2.2.17/conf/'
-alias httpdbin='cd /usr/local/httpd/httpd-2.2.17/bin/'
 alias alist='alias'
 alias motd='cat /etc/motd'
 alias lss='pwd & ls -liAh'
 alias cdd='cd $1 & ls -liAh'
 alias matrix='echo -ne "\e[32m" ; while true ; do echo -ne "\e[$(($RANDOM % 2 ));32m\]" ; tr -c "[:print:]" " " < /dev/urandom | dd count=1 bs=50 2> /dev/null ; done'
+alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
+alias please='sudo $(fc -ln -1)'
+alias pls='please'
+
+alias zuffa="ot 294987 --sudo-make-me-a-sandwich -C '/root/ss.sh'"
+
+# Package management aliases
+alias i='sudo aptitude install'
+alias up='sudo aptitude update'
+alias ug='sudo aptitude upgrade'
+
+alias ya='yaourt'
+alias vugen='rdesktop 10.5.89.14 -d Intensive -u step17212 -g 1280x1000'
 
 function fix-ssh-perms {
     user=$1
@@ -46,5 +57,28 @@ function fix-ssh-perms {
     else
         echo "No ~/.ssh dir found for user:'${user}'"
     fi;
+}
+
+function timecurl {
+    curl -w '%{url_effective}
+    time_namelookup:  %{time_namelookup}
+       time_connect:  %{time_connect}
+    time_appconnect:  %{time_appconnect}
+   time_pretransfer:  %{time_pretransfer}
+      time_redirect:  %{time_redirect}
+ time_starttransfer:  %{time_starttransfer}
+                    ----------
+         time_total:  %{time_total}
+      response_code:  %{http_code}
+' -o /dev/null -Ls $@;
+}
+
+function swap() {
+    first=$1;
+    second=$2;
+    temp=$(mktemp);
+    mv -f $first $temp;
+    mv -f $second $first;
+    mv -f $temp $second;
 }
 

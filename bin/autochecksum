@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+sumfile=${1-$(find . -iname "*SUM" | head -1)};
+lsumfile=$(echo $sumfile | tr '[:upper:]' '[:lower:]');
+sumprog=${lsumfile##*.};
+runsum='$sumprog -c $sumfile 2>&1';
+egrepstring=$(echo "'($(echo `ls` | tr ' ' '|'))'");
+evalme="$runsum | egrep --color=no $egrepstring";
+echo "$sumprog: checking files in ${sumfile}";
+eval $evalme | python <(wget -q -O - https://bitbucket.org/linibou/colorex/raw/default/colorex | grep -v 'End of Input') -g OK -R FAILED

@@ -1,0 +1,43 @@
+#!/usr/bin/env python
+from __future__ import print_function
+from bs4 import BeautifulSoup
+import requests
+import getpass
+import sys
+import re
+
+dcs = ['iad', 'dfw', 'lon1', 'lon3', 'hkg', 'syd']
+
+while True:
+    if len(sys.argv) > 1:
+        bastion_dc = sys.argv[1]
+        sys.argv = [sys.argv[0]]
+    else:
+        bastion_dc = raw_input('Bastion DC [{}]: '.format(', '.join([dc.upper() for dc in dcs]))).lower()
+    if bastion_dc in dcs:
+        break
+    else:
+        print('Sorry, "{}" is not a valid option.'.format(bastion_dc))
+
+bastion_url = 'https://bastion-{}.gateway.rackspace.com/netaccess/loginuser.html'.format(bastion_dc)
+sso_uname = raw_input('SSO Username: ')
+rsapin = getpass.getpass('RSA PIN+TOKEN: ')
+formdata = { 'sid': 0, 'username':sso_uname , 'password':rsapin, 'Login':'Continue'}
+session = requests.Session()
+r1 = session.get(bastion_url)
+page = BeautifulSoup(r1.text, 'html.parser')
+logged_in_text = page.select('body > form > p > table > tbody > tr > td:nth-of-type(2)')
+
+if len(logged_in_text) == 0:
+    r2 = session.post(bastion_url, data=formdata, cookies=session.cookies)
+    page = BeautifulSoup(r2.text)
+    logged_in_text = str(page.select('td:nth-of-type(2)')[0])
+
+split_text = map(lambda t: re.sub(r'<.*?>','',t), logged_in_text.split('<br/>'))
+if split_text[0] == 'You are logged in.':
+    if split_text[-1] == '( for Hours: 0 Min: 0 Sec: 0 )':
+        nowalready = 'NOW'
+    else:
+        nowalready = 'ALREADY'
+    print('\nYOU {} HAVE {} BASTION ACCESS'.format(nowalready,bastion_dc.upper()))
+print('\n'+'\n'.join(split_text))

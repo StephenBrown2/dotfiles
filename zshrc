@@ -50,3 +50,4 @@ fi
 if [ -f ~/.zsh_prompt ]; then
     source ~/.zsh_prompt
 fi
+source /home/stephen/src/k/k.sh

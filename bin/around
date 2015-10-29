@@ -1,0 +1,11 @@
+#!/bin/bash
+device=$1
+blist=$(ot -i --behind $device | tail -1 | sed -e 's/In Front Of: //' -e 's/None//' | tr -d ',')
+flist=$(ot -i --front $device | tail -1 | sed -e 's/Behind Of: //' -e 's/None//' | tr -d ',')
+ot -i $device
+echo -e "\n========== Devices behind $device ==========\n"
+#ht -I $blist | egrep -C1 '(Device|Account|URL|Type|IP|ser):'
+ot -i $blist
+echo -e "\n========== Devices in front of $device ==========\n"
+#ht -I $flist | egrep -C1 '(Device|Account|URL|Type|IP|ser):'
+ot -i $flist
