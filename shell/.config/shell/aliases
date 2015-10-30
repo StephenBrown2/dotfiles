@@ -38,6 +38,9 @@ alias up='sudo aptitude update'
 alias ug='sudo aptitude upgrade'
 
 alias ya='yaourt'
+if [[ -e /usr/bin/packer-color ]] && [[ ! -e /usr/bin/packer ]]; then
+  alias packer='packer-color'
+fi
 alias vugen='rdesktop 10.5.89.14 -d Intensive -u step17212 -g 1280x1000'
 
 function fix-ssh-perms {
