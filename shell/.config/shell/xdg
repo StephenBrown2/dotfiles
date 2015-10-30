@@ -3,3 +3,5 @@ export XDG_CACHE_HOME=${HOME}/.cache
 export XDG_DATA_HOME=${HOME}/.local/share
 
 export DOTREMINDERS=${XDG_CONFIG_HOME}/remind/reminders
+export VIMINIT='source $MYVIMRC'
+export MYVIMRC=${XDG_CONFIG_HOME}/vim/vimrc
