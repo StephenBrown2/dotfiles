@@ -1,0 +1,27 @@
+misc:
+  auto_exit: no
+  corecli_escape: no
+  use_autorun: no
+  show_passwords: yes
+  expect_timeout: 60
+  ssh_args: -F /home/stephen/.ssh/config
+  javawspath: ~/tools/java/bin
+  verify_ssl: False
+  keyringenv: hypervisor
+  use_keyring: True
+  nailsURL: http://nails.penguinarmada.com
+terminal:
+  expect_path: /usr/bin/expect
+  terminal: tmux
+  tmux_layout: tiled
+  tmux_max_panes: 9
+  geometry: 80x24
+  use_colors: yes
+  rdpwin_path: /home/stephen/bin/rdpwin
+authentication:
+  is_service: no
+  username: step7212
+  password: 
+  intensive_ad_username: step17212
+  intensive_ad_become_root: yes
+  browser: firefox

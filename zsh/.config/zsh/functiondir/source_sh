@@ -1,0 +1,2 @@
+emulate -LR sh
+. "$@"

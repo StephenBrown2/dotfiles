@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+source /etc/os-release
+
+logfile="$HOME/workstart/$(date +%F).log";
+touch $logfile
+
+function log() {
+  echo "$@" | tee -a $logfile;
+}
+cpus=$(grep -c process /proc/cpuinfo)
+calm=$(echo ${cpus}/2 | bc)
+load=$(awk '{print $1}' /proc/loadavg);
+l=${load%.*};
+while [ ${l} -gt ${calm} ]; do
+  uptime;
+  log 'waiting for system to calm down...';
+  sleep 5;
+  load=$(awk '{print $1}' /proc/loadavg);
+  l=${load%.*};
+done
+uptime | tee -a $logfile;
+if (( $(date +%w) >= 0 )); then
+  if [ $ID == "ubuntu" ]; then
+    sudo aptitude update && sudo aptitude upgrade -y
+    if [ -f /var/run/reboot-required ]; then
+      cat /var/run/reboot-required
+      echo "Because these packages were updated:"
+      cat /var/run/reboot-required.pkgs
+      echo "Rebooting in 10 seconds..."
+      sleep 10
+      /usr/bin/cinnamon-session-quit --reboot
+    fi
+  elif [ $ID == "arch" ]; then
+    yaourt -Sayyu
+  else
+    echo "I don't know what $ID is, so I can't update it."
+  fi
+fi
+log 'Is the internet on fire?';
+dig +short txt istheinternetonfire.com
+log 'getting intensive password';
+#python -c "import keyring;print keyring.set_password('racker', 'intensive_password', '$(intensify --sso step7212)')" >/dev/null
+#echo $(python -c "import keyring;print keyring.get_password('racker', 'intensive_password')")
+#log 'setting up ssh proxy';
+#ssh -fnND 4444 bastion &
+log 'setting up bastion proxy';
+~/bin/bastion-login dfw
+sleep 5;
+#log 'checking mountpoint';
+#( mountpoint '/media/stephen/Data' && VBoxManage startvm --type gui 632f2be0-2865-4b06-a527-b5a8c3dcd424 & ) | tee -a $logfile
+#echo 'Starting OWA';
+#google-chrome &
+#log 'starting autokey';
+#/home/stephen/.local/bin/autokey-gtk 2>/dev/null &
+sleep 5;
+log 'starting Shutter';
+shutter --min_at_startup 2>/dev/null &
+sleep 5;
+log 'starting Pidgin';
+pidgin &
+sleep 5;
+log 'starting Slack';
+slack &
+sleep 5;
+
+log 'starting Firefox';
+firefox 1>&2 2>/dev/null &
+#/home/stephen/ff-35.0.1/firefox 2>/dev/null &
+sleep 5;
+log 'starting Chromium';
+#google-chrome-unstable --proxy-server="socks://localhost:4444" 2>/dev/null &
+chromium --proxy-pac-url="http://cbast.dfw1.rackspace.com/dfw1pac.js" 2>/dev/null &
+sleep 5;
+log 'starting Sublime';
+subl3 2>/dev/null &
+#sleep 5;
+#log 'starting away-on-lock script'
+#/home/stephen/src/aol.py &
+log 'done!'

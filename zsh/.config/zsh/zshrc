@@ -1,0 +1,44 @@
+# ~/.zshrc
+
+# Source environment variables
+if [ -f ~/.config/shell/env ]; then
+    source ~/.config/shell/env
+fi
+
+# Autoload zsh functions.
+fpath=(~/.config/zsh/functiondir $fpath)
+autoload -U ~/.config/zsh/functiondir/*(:t)
+
+# Source zsh specific functions
+if [ -f ~/.config/zsh/functions ]; then
+    source ~/.config/zsh/functions
+fi
+
+# Source bash specific functions
+if [ -f ~/.config/bash/functions ]; then
+    source_sh ~/.config/bash/functions
+fi
+
+# Source generic aliases
+if [ -f ~/.config/shell/aliases ]; then
+    source_sh ~/.config/shell/aliases
+fi
+
+# Source zsh specific aliases
+if [ -f ~/.config/zsh/aliases ]; then
+    source ~/.config/zsh/aliases
+fi
+
+# Source zgen (before prompt, for reasons)
+if [ -f ~/.config/zgen/zgen.zsh ]; then
+    export ZGEN_DIR=$XDG_CONFIG_HOME/zgen
+    export ZGEN_FILE=$XDG_CONFIG_HOME/zsh/zgen
+    export ZGEN_RESET_ON_CHANGE=($ZGEN_FILE)
+    source $ZGEN_DIR/zgen.zsh
+    source $ZGEN_FILE
+fi
+
+# Source zsh specific prompt
+if [ -f ~/.config/zsh/prompt ]; then
+    source ~/.config/zsh/prompt
+fi

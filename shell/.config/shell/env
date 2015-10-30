@@ -1,0 +1,9 @@
+export TIME_STYLE=long-iso
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWSTASHSTATE=1
+export GIT_PS1_SHOWUNTRACKEDFILES=1
+export GIT_PS1_SHOWUPSTREAM='verbose'
+export GIT_PS1_DESCRIBE_STYLE='branch'
+export GIT_PS1_SHOWCOLORHINTS=1
+
+source $HOME/.config/shell/xdg

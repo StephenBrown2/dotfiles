@@ -1,0 +1,6 @@
+  if [ "$LAST_DIR" != "$PWD" ]
+    then
+      print -s "##dir## $PWD"
+      LAST_DIR=$PWD
+  fi
+
