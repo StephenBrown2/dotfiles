@@ -65,7 +65,7 @@
   lg = !git l --graph
 
 [merge]
-  tool = vimdiff
+  tool = meld
 
 [diff]
   tool = meld
