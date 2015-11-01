@@ -78,3 +78,9 @@ add-zsh-hook precmd precmd_add_dir_to_history
 if [[ -f /usr/share/doc/pkgfile/command-not-found.zsh ]]; then
   source /usr/share/doc/pkgfile/command-not-found.zsh
 fi
+
+if [[ -f $XDG_CONFIG_HOME/rack/commandcompletion_bash.sh ]]; then
+  autoload bashcompinit
+  bashcompinit
+  source $XDG_CONFIG_HOME/rack/commandcompletion_bash.sh
+fi
