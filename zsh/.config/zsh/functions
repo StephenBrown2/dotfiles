@@ -75,4 +75,6 @@ bindkey "^k" insert-sudo
 autoload -U add-zsh-hook
 add-zsh-hook precmd precmd_add_dir_to_history
 
-source /usr/share/doc/pkgfile/command-not-found.zsh
+if [[ -f /usr/share/doc/pkgfile/command-not-found.zsh ]]; then
+  source /usr/share/doc/pkgfile/command-not-found.zsh
+fi
