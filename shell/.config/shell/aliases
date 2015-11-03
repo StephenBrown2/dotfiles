@@ -29,6 +29,8 @@ alias matrix='echo -ne "\e[32m" ; while true ; do echo -ne "\e[$(($RANDOM % 2 ))
 alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias please='sudo $(fc -ln -1)'
 alias pls='please'
+alias xclip='xclip -selection c'
+alias stc='stoken | xclip'
 
 alias zuffa="ot 294987 --sudo-make-me-a-sandwich -C '/root/ss.sh'"
 
