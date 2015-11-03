@@ -55,6 +55,7 @@
   #   ra = recent commits, all reachable refs
   #   l = all commits, only current branch
   #   la = all commits, all reachable refs
+  #   lgh = last ten commits, all reachable refs
   head = !git l -1
   h = !git head
   hp = "!. ~/.config/git/helpers && show_git_head"
@@ -63,6 +64,7 @@
   l = "!. ~/.config/git/helpers && git_log_pretty"
   la = !git l --all
   lg = !git l --graph
+  lgh = "!git l --graph | head"
 
 [merge]
   tool = meld
