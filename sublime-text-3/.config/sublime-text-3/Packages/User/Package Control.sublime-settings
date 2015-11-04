@@ -1,4 +1,8 @@
 {
+	"bootstrapped": true,
+	"in_process_packages":
+	[
+	],
 	"installed_packages":
 	[
 		"Emmet",
@@ -6,6 +10,13 @@
 		"GitGutter",
 		"HTML-CSS-JS Prettify",
 		"Package Control",
-		"SublimeLinter"
+		"SublimeLinter",
+		"SublimeLinter-annotations",
+		"SublimeLinter-contrib-eslint",
+		"SublimeLinter-csslint",
+		"SublimeLinter-flake8",
+		"SublimeLinter-html-tidy",
+		"SublimeLinter-json",
+		"SublimeLinter-pep257"
 	]
 }
