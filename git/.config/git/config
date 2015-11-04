@@ -2,6 +2,11 @@
   name = Stephen Brown II
   email = Stephen.Brown2@gmail.com
 
+[core]
+  editor = /usr/bin/vim
+[help]
+  autocorrect = 10
+
 [color]
   ui = true
   branch = auto
