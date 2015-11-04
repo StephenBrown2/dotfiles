@@ -1,10 +1,15 @@
 {
-	"color_scheme": "Packages/User/Monokai (SL).tmTheme",
+	"font_face": "Hack",
 	"font_size": 10,
-	"ignored_packages":
-	[
+	"ignored_packages": [
 		"Vintage"
 	],
+	"rulers": [
+		80,
+		120,
+		160
+	],
 	"tab_completion": false,
+	"translate_tabs_to_spaces": true,
 	"update_check": false
 }

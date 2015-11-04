@@ -1,11 +1,9 @@
 {
-	"bootstrapped": true,
-	"in_process_packages":
-	[
-	],
 	"installed_packages":
 	[
 		"Emmet",
+		"Git",
+		"GitGutter",
 		"HTML-CSS-JS Prettify",
 		"Package Control",
 		"SublimeLinter"
