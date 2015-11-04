@@ -5,6 +5,7 @@
 	],
 	"installed_packages":
 	[
+		"Anaconda",
 		"Case Conversion",
 		"Emmet",
 		"Git",
@@ -15,10 +16,7 @@
 		"SublimeLinter-annotations",
 		"SublimeLinter-contrib-eslint",
 		"SublimeLinter-csslint",
-		"SublimeLinter-flake8",
 		"SublimeLinter-html-tidy",
-		"SublimeLinter-json",
-		"SublimeLinter-pep257",
-		"SublimeLinter-pylint"
+		"SublimeLinter-json"
 	]
 }
