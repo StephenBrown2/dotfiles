@@ -5,6 +5,7 @@
 	],
 	"installed_packages":
 	[
+		"Case Conversion",
 		"Emmet",
 		"Git",
 		"GitGutter",
@@ -17,6 +18,7 @@
 		"SublimeLinter-flake8",
 		"SublimeLinter-html-tidy",
 		"SublimeLinter-json",
-		"SublimeLinter-pep257"
+		"SublimeLinter-pep257",
+		"SublimeLinter-pylint"
 	]
 }

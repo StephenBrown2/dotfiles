@@ -1,11 +1,11 @@
 {
     "user": {
-        "debug": false,
+        "debug": true,
         "delay": 0.25,
         "error_color": "D02000",
         "gutter_theme": "Packages/SublimeLinter/gutter-themes/Default/Default.gutter-theme",
         "gutter_theme_excludes": [],
-        "lint_mode": "load/save",
+        "lint_mode": "background",
         "linters": {
             "annotations": {
                 "@disable": false,
@@ -35,6 +35,18 @@
                 "args": [],
                 "excludes": []
             },
+            "flake8": {
+                "@disable": false,
+                "args": [],
+                "builtins": "",
+                "excludes": [],
+                "ignore": "",
+                "jobs": "1",
+                "max-complexity": -1,
+                "max-line-length": 120,
+                "select": "",
+                "show-code": true
+            },
             "htmltidy": {
                 "@disable": false,
                 "args": [],
@@ -50,10 +62,20 @@
                 "@disable": false,
                 "args": [],
                 "excludes": [],
-                "ignore": ""
+                "ignore": "C0301"
+            },
+            "pylint": {
+                "@disable": false,
+                "args": [],
+                "disable": "C0301",
+                "enable": "",
+                "excludes": [],
+                "paths": [],
+                "rcfile": "",
+                "show-codes": true
             }
         },
-        "mark_style": "fill",
+        "mark_style": "stippled underline",
         "no_column_highlights_line": false,
         "passive_warnings": false,
         "paths": {
