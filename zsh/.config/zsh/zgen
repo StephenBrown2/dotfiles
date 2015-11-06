@@ -2,8 +2,10 @@ if ! zgen saved; then
   echo "Creating a zgen save"
   
   zgen load rimraf/k
-  zgen load olivierverdier/zsh-git-prompt
+  zgen load djui/alias-tips
+  zgen load arzzen/calc.plugin.zsh
   zgen load unixorn/git-extra-commands
+  zgen load olivierverdier/zsh-git-prompt
   zgen load zsh-users/zsh-completions
   zgen load zsh-users/zsh-syntax-highlighting
 
