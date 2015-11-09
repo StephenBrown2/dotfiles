@@ -6,17 +6,23 @@
 	"installed_packages":
 	[
 		"Anaconda",
+		"Autoprefixer",
 		"Case Conversion",
 		"Emmet",
 		"Git",
 		"GitGutter",
 		"HTML-CSS-JS Prettify",
+		"Markdown Preview",
+		"nginx",
 		"Package Control",
+		"Pretty JSON",
+		"SideBarGit",
 		"SublimeLinter",
 		"SublimeLinter-annotations",
 		"SublimeLinter-contrib-eslint",
 		"SublimeLinter-csslint",
 		"SublimeLinter-html-tidy",
-		"SublimeLinter-json"
+		"SublimeLinter-json",
+		"Tag"
 	]
 }
