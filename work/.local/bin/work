@@ -44,7 +44,7 @@ log 'getting intensive password';
 #log 'setting up ssh proxy';
 #ssh -fnND 4444 bastion &
 log 'setting up bastion proxy';
-~/bin/bastion-login dfw
+bastion-login dfw
 sleep 5;
 #log 'checking mountpoint';
 #( mountpoint '/media/stephen/Data' && VBoxManage startvm --type gui 632f2be0-2865-4b06-a527-b5a8c3dcd424 & ) | tee -a $logfile
