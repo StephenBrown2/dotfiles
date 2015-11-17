@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+maim /tmp/screen.png
+convert /tmp/screen.png -scale 5% -scale 2000% /tmp/screen.png
+#convert /tmp/screen.png -scale 10% -scale 1000% /tmp/screen.png
+eval $(~/.local/bin/randxkcd.sh)
+width=$(identify -format "%W" $filename)
+#convert ${filename} -background white -fill black -gravity center -font 'Humor-Sans' -pointsize 16 -size ${width} caption:"${alttext}" -append /tmp/xkcd-alt.png
+convert ${filename} -background white -fill black -gravity center -font 'xkcd-Regular' -pointsize 16 -size ${width} caption:"${alttext}" -append /tmp/xkcd-alt.png
+# convert ${file} -resize '1000x1000>' /tmp/xkcd.png
+convert -gravity center -composite /tmp/screen.png \
+/tmp/xkcd-alt.png /tmp/screen.png
+#~/Downloads/lock.png /tmp/screen.png
+#~/.config/i3/i3lock/lock.png /tmp/screen.png
+i3lock -efi /tmp/screen.png
+for file in screen.png xkcd.png xkcd-alt.png; do
+  [[ -f $file ]] && rm $file
+done
