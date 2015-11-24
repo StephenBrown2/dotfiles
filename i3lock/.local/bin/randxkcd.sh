@@ -17,7 +17,16 @@ function lastnum() {
 }
 
 function alttext() {
-   fetchurl "https://xkcd.com/$1/info.0.json" | jshon -Q -e 'alt'
+  if [[ -f "${CACHE}/${1}_alt.txt" ]]; then
+    cat "${CACHE}/${1}_alt.txt"
+  else
+    fetchurl "https://xkcd.com/$1/info.0.json" | jshon -Q -e 'alt' | cleantext | tee "${CACHE}/${1}_alt.txt"
+  fi
+}
+
+function cleantext() {
+  read a;
+  echo "$a" | sed 's/(f)u(ck)/$1*$2/ig'
 }
 
 function imgurl() {
@@ -52,3 +61,4 @@ wget --quiet --continue "$image" -O ${random}_$(basename $image) ||
 # Now all that's left to do is to print the path to the comic
 echo "filename=${CACHE}/${random}_$(basename "$image")"
 echo "alttext=${alt}"
+echo "number=${random}"
