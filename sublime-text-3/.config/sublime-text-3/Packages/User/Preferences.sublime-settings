@@ -5,7 +5,8 @@
 	"color_scheme": "Packages/User/SublimeLinter/Monokai (SL).tmTheme",
 	"draw_minimap_border": true,
 	"ensure_newline_at_eof_on_save": true,
-	"folder_exclude_patterns": [
+	"folder_exclude_patterns":
+	[
 		".svn",
 		".git",
 		".hg",
@@ -13,21 +14,25 @@
 		"__pycache__"
 	],
 	"font_face": "Hack",
-	"font_size": 10,
-	"font_options": [
+	"font_options":
+	[
 		"subpixel_antialias"
 	],
+	"font_size": 10,
 	"highlight_line": true,
 	"highlight_modified_tabs": true,
-	"ignored_packages": [
+	"ignored_packages":
+	[
 		"Vintage"
 	],
-	"indent_guide_options": [
+	"indent_guide_options":
+	[
 		"draw_active",
 		"draw_normal"
 	],
 	"indent_to_bracket": true,
-	"rulers": [
+	"rulers":
+	[
 		80,
 		120,
 		160
