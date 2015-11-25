@@ -31,7 +31,13 @@ if (( $(date +%w) >= 0 )); then
       /usr/bin/cinnamon-session-quit --reboot
     fi
   elif [ $ID == "arch" ]; then
-    yaourt -Sayyu
+    packer -Syyu
+    if [[ -n $I3SOCK ]]; then
+      echo "Running i3, setting up the layouts"
+      i3-msg "workspace 1; append_layout ~/.config/i3/work-workspace-1.json"
+      i3-msg "workspace 2; append_layout ~/.config/i3/work-workspace-2.json"
+      i3-msg "workspace 3; append_layout ~/.config/i3/work-workspace-3.json"
+    fi
   else
     echo "I don't know what $ID is, so I can't update it."
   fi
@@ -71,6 +77,17 @@ log 'starting Chromium';
 #google-chrome-unstable --proxy-server="socks://localhost:4444" 2>/dev/null &
 chromium --proxy-pac-url="http://cbast.dfw1.rackspace.com/dfw1pac.js" 2>/dev/null &
 sleep 5;
+log 'Smartsheet Chromium App'
+/usr/bin/chromium --profile-directory=Default --app-id=alehdleagcgnimdipdmllebddejplpbi &
+
+log 'Google Play Music Chromium App'
+/usr/bin/chromium --profile-directory=Default --app-id=fahmaaghhglfmonjliepjlchgpgfmobi &
+
+termite -e cava -t cava -c ~/.config/termite/config.cava --geometry=540x296 &
+
+log 'Google Hangouts Chromium App'
+/usr/bin/chromium --profile-directory=Default --app-id=knipolnnllmklapflnccelgolnpehhpl &
+sleep 5
 log 'starting Sublime';
 subl3 2>/dev/null &
 #sleep 5;
