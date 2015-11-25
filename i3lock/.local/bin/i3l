@@ -29,7 +29,8 @@ width=$(identify -format "%W" $filename)
 fontname=xkcd-Regular
 
 # Set up the xkcd alt text and append to the comic image
-convert ${filename} -background white -fill black -gravity center -font ${fontname} -pointsize 14 -size ${width} caption:"Comic #${number}: ${alttext}" -append -resize "x${maxheight}>" /tmp/xkcd-alt.png
+captionoptions=(-background white -fill black -gravity center -font ${fontname} -pointsize 14 -size ${width})
+convert "${captionoptions[@]}" caption:"Comic #${number}: ${title}" -append ${filename} "${captionoptions[@]}" caption:"${alttext}" -bordercolor white -border 5 -bordercolor black -border 1 -append -resize "x${maxheight}>" /tmp/xkcd-alt.png
 
 # Stick the comic smack dab in the middle of the pixelated background
 convert -gravity center -composite /tmp/screen.png /tmp/xkcd-alt.png /tmp/screen.png
