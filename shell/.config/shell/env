@@ -6,4 +6,7 @@ export GIT_PS1_SHOWUPSTREAM='verbose'
 export GIT_PS1_DESCRIBE_STYLE='branch'
 export GIT_PS1_SHOWCOLORHINTS=1
 
+export EDITOR=vim
+export VISUAL=vim
+
 source $HOME/.config/shell/xdg
