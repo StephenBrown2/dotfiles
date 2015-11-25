@@ -1,0 +1,7 @@
+[options]
+font = Hack 4
+font = Ubuntu Mono 3
+font = DejaVu Sans Mono 2
+
+[colors]
+background = rgba(0, 0, 0, 0.5)

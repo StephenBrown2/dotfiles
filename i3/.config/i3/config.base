@@ -9,7 +9,7 @@ exec --no-startup-id xrandr --output HDMI1 --mode 1680x1050 --pos 0x0 --rotate n
 exec --no-startup-id feh --bg-fill ~/.wallpapers/red-tesla-logo-wallpaper.jpg
 
 # Compositing with compton
-exec --no-startup-id compton --opacity-rule '100:window_type = "dock" && class_g = "i3bar"' --config ~/.config/compton.conf -b
+exec --no-startup-id compton --config ~/.config/compton.conf -b
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
