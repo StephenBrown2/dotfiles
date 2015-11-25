@@ -3,6 +3,7 @@ export XDG_CACHE_HOME=${HOME}/.cache
 export XDG_DATA_HOME=${HOME}/.local/share
 
 export DOTREMINDERS=${XDG_CONFIG_HOME}/remind/reminders
+export VIM="/usr/share/vim"
 export MYVIMRC=${XDG_CONFIG_HOME}/vim/vimrc
 export VIMINIT='source $MYVIMRC'
 
@@ -25,7 +26,6 @@ export PYLINTRC="$XDG_CONFIG_HOME/pylint/pylintrc"
 export PYLINTHOME="$XDG_DATA_HOME/pylint"
 export PYTHONSTARTUP="$XDG_CONFIG_HOME/python/pythonrc"
 export RXVT_SOCKET="$XDG_CACHE_HOME/urxvt/urxvtd.sock"
-export VIMINIT="source $XDG_CONFIG_HOME/vim/vimrc"
 #export XAUTHORITY="$XDG_CACHE_HOME/X11/Xauthority"
 
 # Alias respecting programs
