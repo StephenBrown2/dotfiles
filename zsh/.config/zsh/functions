@@ -1,22 +1,5 @@
 # Basically zshrc
 
-# Key Bindings
-bindkey "\e[1~" beginning-of-line # Home
-bindkey "\e[4~" end-of-line # End
-bindkey "\e[5~" beginning-of-history # PageUp
-bindkey "\e[6~" end-of-history # PageDown
-bindkey "\e[2~" quoted-insert # Ins
-bindkey "\e[3~" delete-char # Del
-bindkey "\e[5C" forward-word
-bindkey "\eOc" emacs-forward-word
-bindkey "\e[5D" backward-word
-bindkey "\eOd" emacs-backward-word
-bindkey "\e\e[C" forward-word
-bindkey "\e\e[D" backward-word
-bindkey "\e[Z" reverse-menu-complete # Shift+Tab
-#bindkey "^[[A" history-beginning-search-backward # Up
-#bindkey "^[[B" history-beginning-search-forward # Down
-
 # Initialize colors.
 autoload -U colors
 colors
@@ -29,12 +12,17 @@ autoload -U is-at-least
 
 # Taken from http://askubuntu.com/questions/1577/moving-from-bash-to-zsh
 
+zmodload zsh/complist
+
 # More extensive tab completion (necessary for fish_dir tab completion)
 autoload -U compinit
 compinit
 
 # Tab completion from both ends
 setopt completeinword
+
+# Enable Menu select for completions with more than 10 options
+zstyle ':completion:*' menu select=10
 
 # Tab completion should be case-insensitive
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
@@ -67,8 +55,10 @@ setopt auto_cd
 REPORTTIME=10
 
 # Insert sudo at beginning of line with a keystroke
-insert_sudo     () { zle beginning-of-line; zle -U "sudo "         }
-zle -N insert-sudo      insert_sudo
+insert_sudo() {
+  zle beginning-of-line; zle -U "sudo ";
+}
+zle -N insert-sudo insert_sudo
 bindkey "^k" insert-sudo
 
 # Function to add dir in history upon changing dir

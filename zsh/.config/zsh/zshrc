@@ -38,6 +38,11 @@ if [ -f ~/.config/zgen/zgen.zsh ]; then
     source $ZGEN_FILE
 fi
 
+# Source zsh specific key bindings
+if [ -f ~/.config/zsh/zkbd ]; then
+    source ~/.config/zsh/zkbd
+fi
+
 # Source zsh specific prompt
 if [ -f ~/.config/zsh/prompt ]; then
     source ~/.config/zsh/prompt
