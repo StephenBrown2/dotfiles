@@ -1,0 +1,50 @@
+#
+# i3-specific configuration
+#
+
+# Display configuration
+exec --no-startup-id xrandr --output HDMI1 --mode 1680x1050 --pos 0x0 --rotate normal --output HDMI2 --primary --mode 1680x1050 --pos 1680x0 --rotate normal --output HDMI3 --mode 1680x1050 --pos 3360x0 --rotate normal
+
+# Wallpaper
+exec --no-startup-id feh --bg-fill ~/.wallpapers/red-tesla-logo-wallpaper.jpg
+
+# Compositing with compton
+exec --no-startup-id compton --opacity-rule '100:window_type = "dock" && class_g = "i3bar"' --config ~/.config/compton.conf -b
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym $left       resize shrink width 10 px or 10 ppt
+        bindsym $down       resize grow height 10 px or 10 ppt
+        bindsym $up         resize shrink height 10 px or 10 ppt
+        bindsym $right      resize grow width 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left        resize shrink width 10 px or 10 ppt
+        bindsym Down        resize grow height 10 px or 10 ppt
+        bindsym Up          resize shrink height 10 px or 10 ppt
+        bindsym Right       resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym Mod1+r mode "resize"
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+bar {
+    status_command i3status
+    mode dock
+    tray_output HDMI2
+    font pango:Hack, Ubuntu Mono, DejaVu Sans Mono 10
+    workspace_buttons yes
+    strip_workspace_numbers yes
+}
+

@@ -1,0 +1,9 @@
+#
+# Sway-specific configuration
+#
+
+# Display configuration
+output HDMI1 resolution 1680x1050 position 0,0 background ~/.wallpapers/red-tesla-logo-wallpaper.jpg stretch
+output HDMI2 resolution 1680x1050 position 1680,0 background ~/.wallpapers/red-tesla-logo-wallpaper.jpg stretch
+output HDMI3 resolution 1680x1050 position 3360,0 background ~/.wallpapers/red-tesla-logo-wallpaper.jpg stretch
+

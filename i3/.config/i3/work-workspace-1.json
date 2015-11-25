@@ -1,0 +1,19 @@
+// Put Firefox on the left monitor
+{
+    "layout": "stacked",
+    "percent": 1,
+    "type": "con",
+    "nodes": [
+        {
+            "name": "firefox",
+            "type": "con",
+            "swallows": [
+                {
+                    "class": "^Firefox$",
+                    "instance": "^Navigator$",
+                    "window_role": "^browser$"
+                }
+            ]
+        }
+    ]
+}

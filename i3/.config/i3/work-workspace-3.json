@@ -1,0 +1,88 @@
+// Slack on the left half
+{
+    "layout": "splitv",
+    "percent": 0.5,
+    "type": "con",
+    "nodes": [
+        {
+            "name": "slack",
+            "type": "con",
+            "percent": 0.718095238,
+            "swallows": [
+                {
+                    "class": "^Slack$",
+                    "instance": "slack"
+                }
+            ]
+        },
+        {
+            "name": "hangouts",
+            "type": "con",
+            "percent": 0.281904762,
+            "swallows": [
+                {
+                    "class": "^chromium$",
+                    "instance": "crx_knipolnnllmklapflnccelgolnpehhpl",
+                    "window_role": "app"
+                }
+            ]
+        }
+    ]
+}
+
+// Pidgin on the top right half
+// terminal running cava on the bottom left
+// Google Play Music on the bottom right
+{
+    "layout": "splitv",
+    "percent": 0.5,
+    "type": "con",
+    "nodes": [
+        {
+            "name": "pidgin",
+            "percent": 0.718095238,
+            "type": "con",
+            "swallows": [
+                {
+                    "class": "^Pidgin$",
+                    "instance": "^Pidgin$",
+                    "window_role": "buddy_list"
+                }
+            ]
+        },
+        {
+            // stacked split container with 2 children
+            "layout": "splith",
+            "percent": 0.281904762,
+            "type": "con",
+            "nodes": [
+                {
+                    "name": "cava",
+                    "percent": 0.647619048,
+                    "border": "none",
+                    "type": "con",
+                    "swallows": [
+                        {
+                            "class": "^Termite$",
+                            "instance": "^termite$",
+                            "title": "cava"
+                        }
+                    ]
+                },
+                {
+                    "name": "music",
+                    "percent": 0.352380952,
+                    "border": "none",
+                    "type": "con",
+                    "swallows": [
+                        {
+                            "class": "^chromium$",
+                            "instance": "^crx_fahmaaghhglfmonjliepjlchgpgfmobi$",
+                            "window_role": "app"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

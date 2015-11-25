@@ -1,0 +1,31 @@
+// Put Chromium and Smartsheet app on the middle monitor
+{
+    // tabbed split container with 2 children
+    "layout": "tabbed",
+    "percent": 1,
+    "type": "con",
+    "nodes": [
+        {
+            "name": "chromium",
+            "type": "con",
+            "swallows": [
+                {
+                    "class": "^chromium$",
+                    "instance": "^chromium$",
+                    "window_role": "^browser$"
+                }
+            ]
+        },
+        {
+            "name": "smartsheet",
+            "type": "con",
+            "swallows": [
+                {
+                    "class": "^chromium$",
+                    "instance": "^crx_alehdleagcgnimdipdmllebddejplpbi$",
+                    "window_role": "^app$"
+                }
+            ]
+        }
+    ]
+}
