@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# ripped from pulseaudio-ctl
+volume=$(pacmd list-sinks|grep -A 15 '* index'|awk '/volume: /{ print $3 }'|grep -m 1 %|sed 's/[%|,]//g')
+
+echo "${volume}%"
+echo "${volume}%"
+echo ""
+
+if [[ "${volume}" -gt 100 ]]; then
+  exit 33
+fi

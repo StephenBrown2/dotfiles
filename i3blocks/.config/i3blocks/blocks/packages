@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+source /etc/os-release
+
+if [[ "$ID" == "ubuntu" ]]; then
+    PACKAGES=$(aptitude search -F '%p' '~i')
+    UPGRADES=$(aptitude search -F '%p' '~U')
+else
+    PACKAGES=$(pacman -Qq)
+    UPGRADES=$(packer --quickcheck)
+fi
+
+URGENT_VALUE=25
+
+if [[ $? -gt 0 ]]; then
+  return
+fi
+
+PACKAGE_COUNT=$(echo -n "${PACKAGES}" | wc -l)
+UPGRADE_COUNT=$(echo -n "${UPGRADES}" | wc -l)
+
+if [[ "${UPGRADE_COUNT}" -gt 0 ]]; then
+  echo "${UPGRADE_COUNT}/${PACKAGE_COUNT}" # full-text
+  echo "${UPGRADE_COUNT}" # short-text
+  echo "#FFFF00"
+  if [[ "${UPGRADE_COUNT}" -gt "${URGENT_VALUE}" ]]; then
+    exit 33
+  fi
+else
+  echo "${PACKAGE_COUNT}" # full-text
+  echo "${PACKAGE_COUNT}" # short-text
+  echo ""
+fi

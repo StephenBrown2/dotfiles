@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+status=$(pacmd list-sources | grep -A 15 '* index')
+muted=$(echo "${status}" | awk '/muted:/{ print $2 }')
+volume=$(echo "${status}" | awk '/volume: /{ print $3 }' | grep -m 1 % | sed 's/[%|,]//g')
+
+if [[ "${muted}" == "yes" ]]; then
+  echo "muted"
+  echo "MUTE"
+  echo ""
+elif [[ "${volume}" -gt 0 ]]; then
+  echo "${volume}%"
+  echo "${volume}%"
+  echo ""
+fi

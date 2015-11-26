@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+LOCALE_INFO=$(localectl)
+LOCALE_NAME=$(echo "${LOCALE_INFO}" | grep "System Locale" | awk -F '=' '{print $2}' | cut -c 1-2)
+LOCALE_FULL=$(echo "${LOCALE_INFO}" | grep "System Locale" | awk -F '=' '{split($2,l,".");print l[1]}')
+
+if [[ "${LOCALE_NAME}" ]]; then
+  echo "${LOCALE_FULL}"
+  echo "${LOCALE_NAME}"
+  echo ""
+fi

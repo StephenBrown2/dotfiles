@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+echo "${USER:-$(id -nu)}"
+echo "${USER:-$(id -nu)}"
+echo ""
+
+if [[ $(id -u) -eq 0 ]]; then
+  exit 33
+fi
