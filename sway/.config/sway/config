@@ -28,10 +28,10 @@ set $menu j4-dmenu-desktop --dmenu='dmenu -i -s 0 -x 420 -y 525 -w 840 -dim .75'
 
 # use these keys for focus, movement, and resize directions when reaching for
 # the arrows is not convenient
-set $left h
-set $down j
-set $up k
-set $right l
+set $left j
+set $down k
+set $up l
+set $right semicolon
 
 ### Key bindings
 #

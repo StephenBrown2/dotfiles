@@ -1,0 +1,9 @@
+#!/bin/bash
+rm -f /tmp/*output.png
+i=0;
+for out in $(swaymsg -t get_outputs | jshon -a -e name -u -p -e rect -e x | paste -s -d '\t\n' | sort -nk2 | cut -f1);
+do
+  swaygrab "${out}" "/tmp/${i}-${out}.output.png";
+  let i=i+1;
+done;
+convert /tmp/*.output.png +append /tmp/output.png
