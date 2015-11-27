@@ -4,7 +4,7 @@
 INSTANCE="${BLOCK_INSTANCE}"
 
 if [[ "${INSTANCE}" = "" ]]; then
-  INSTANCE="wlp3s0;both"
+  INSTANCE="eno1;both"
 fi
 
 SHOW=$(echo "${INSTANCE}" | awk -F ';' '{print $2}')

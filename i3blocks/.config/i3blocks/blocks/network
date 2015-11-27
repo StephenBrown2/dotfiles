@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-device="${BLOCK_INSTANCE:-eth0}"
+device="${BLOCK_INSTANCE:-eno1}"
 status=$(cat /sys/class/net/${device}/operstate)
 
 URGENT_VALUE=20

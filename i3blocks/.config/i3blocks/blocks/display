@@ -2,12 +2,13 @@
 
 xrandrOut=$(xrandr)
 
+defaultName=$(echo "${xrandrOut}" | grep -i 'default' | awk '{print $1}')
 hdmiName=$(echo "${xrandrOut}" | grep -i 'HDMI' | awk '{print $1}')
 vgaName=$(echo "${xrandrOut}" | grep -i 'VGA' | awk '{print $1}')
 edpName=$(echo "${xrandrOut}" | grep -i 'EDP' | awk '{print $1}')
 dpName=$(echo "${xrandrOut}" | grep -i 'DP' | awk '{print $1}')
 
-activeDisplays=$(echo "${xrandrOut}" | grep " connected" | sed -e "s/\([A-Z0-9]\+\) connected.*/\1/" | tr -s '\n' ' ')
+activeDisplays=$(echo "${xrandrOut}" | grep " connected" | sed -e "s/\([a-zA-Z0-9]\+\) connected.*/\1/" | tr -s '\n' ' ')
 displayFile='/tmp/.displays'
 
 if [[ -f "${displayFile}" ]]; then

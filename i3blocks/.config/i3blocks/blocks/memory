@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
-
 # First argument is source (mem/swap), second is output value
 # Check /proc/meminfo for possible instances
-INSTANCE="${BLOCK_INSTANCE:-mem;free}"
+INSTANCE="${BLOCK_INSTANCE:-mem;available}"
 
 SOURCE=$(echo "${INSTANCE}" | awk -F ';' '{print $1}')
 SHOW=$(echo "${INSTANCE}" | awk -F ';' '{print $2}')
@@ -25,11 +24,11 @@ ONE_TB=$(echo "${ONE_GB}*1024" | bc -l)
 # Grep the value and remove KB so we can calculate with it later
 #MEMINFO=$(cat /proc/meminfo | grep "${INSTANCE}" | awk -F ':' '{print $2}' | tr -d ' kB')
 SOURCE_TOTAL=$(cat /proc/meminfo | grep -i "${SOURCE}total" | awk -F ':' '{print $2}' | tr -d ' kB')
-SOURCE_FREE=$(cat /proc/meminfo | grep -i "${SOURCE}available" | awk -F ':' '{print $2}' | tr -d ' kB')
+SOURCE_FREE=$(cat /proc/meminfo | grep -i "${SOURCE}${SHOW}" | awk -F ':' '{print $2}' | tr -d ' kB')
 SOURCE_USED=$(echo "scale=0; ${SOURCE_TOTAL}-${SOURCE_FREE}" | bc -l)
 SOURCE_PERC=$(echo "scale=0; (${SOURCE_USED}*100)/${SOURCE_TOTAL}" | bc -l)
 
-if [[ "${SHOW}" = "free" ]]; then
+if [[ "${SHOW}" = "free" ]] || [[ "${SHOW}" = "available" ]]; then
   MEMINFO="${SOURCE_FREE}"
 elif [[ "${SHOW}" = "used" ]]; then
   MEMINFO="${SOURCE_USED}"

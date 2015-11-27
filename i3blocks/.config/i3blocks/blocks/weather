@@ -21,10 +21,10 @@ else
 fi
 
 ICON_SUNNY=""
-ICON_CLOUDY=""
-ICON_RAINY=""
-ICON_STORM=""
-ICON_SNOW=""
+ICON_CLOUDY=""
+ICON_RAINY=""
+ICON_STORM=""
+ICON_SNOW=""
 
 WEATHER_URL="http://api.openweathermap.org/data/2.5/weather?id=${CITY_ID}&appid=${API_KEY}&units=${UNITS}"
 
