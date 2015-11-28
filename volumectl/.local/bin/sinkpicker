@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Original source: https://github.com/Airblader/volumectl
+set -eu
+
+volumectl list-sinks | awk '{print $1" | "$2}' | dmenu -l 10 -i "$@" | xargs volumectl set-sink

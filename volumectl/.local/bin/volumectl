@@ -1,0 +1,146 @@
+#!/usr/bin/env bash
+# Original source: https://github.com/Airblader/volumectl
+set -eu
+
+function err() {
+  echo "$@" 1>&2
+  exit 1
+}
+
+is_muted() {
+  local result=`pacmd list-sinks|grep -A 15 '* index'|awk '/muted:/{print $2}'`
+  [[ "${result}" = 'yes' ]] && return 0 || return 1
+}
+
+read_volume() {
+  is_muted && {
+    echo 0
+    return
+  }
+  pacmd list-sinks|grep -A 15 '* index'|grep 'volume: '|grep -o '[0-9]\+%'|grep -m 1 %|sed 's/[%|,]//g'
+}
+
+read_active_sink() {
+  pacmd list-sinks | grep "* index" | awk '{print $3}'
+}
+
+read_active_source() {
+  pacmd list-sources | grep "* index" | awk '{print $3}'
+}
+
+set_volume() {
+  local volume="$1"
+  local sink=`read_active_sink`
+  pactl set-sink-volume ${sink} -- ${volume}%
+}
+
+toggle_sound() {
+  local sink=`read_active_sink`
+  pactl set-sink-mute ${sink} toggle
+}
+
+usage() {
+  echo "volumectl [status|read|set|toggle|list-sinks|set-sink]
+  Helper script to deal with volumes and sound output.
+COMMANDS
+  status
+    Print either 'on' or 'muted' depending on the current state.
+  read
+    Prints the current volume in percent. If sound is currently muted,
+    it will be printed as '0'.
+  set
+    Change the volume. Accepts either an absolute new value (e.g., 'set 75')
+    or a relative change (e.g., 'set +5' or 'set -10').
+  toggle
+    Toggle sound (i.e., mute / unmute it).
+  list-sinks
+    Print a list of available outputs.
+  set-sink
+    Set the default sink.
+  list-sources
+    Print a list of available sources.
+  set-source
+    Set the default source.
+
+TROUBLESHOOTING
+  - When switching to a new sink, there is no audio anymore.
+    A: Toggle audio output twice."
+}
+
+case "${1:-}" in
+  status)
+    is_muted && echo "muted" || echo "on"
+    ;;
+  read)
+    read_volume
+    ;;
+  set)
+    maxvolume="${MAX_ALLOWED_VOLUME:-200}"
+    volume="${2:-}"
+    [[ -z "${volume}" ]] && err "no volume to set was specified"
+
+    # for increase/decrease, calculate the new absolute value first
+    case "${volume}" in
+      '+'*|'-'*)
+        current=`read_volume`
+        volume=$((${current}${volume:0:1}${volume:1}))
+    esac
+
+    # make sure the new value is in bounds
+    volume=$(($volume>0?$volume:0))
+    volume=$(($volume<$maxvolume?$volume:$maxvolume))
+
+    case "${volume}" in
+      ''|*[!0-9]*)
+        err "volume has to be a number"
+        ;;
+      *)
+        set_volume ${volume}
+        ;;
+    esac
+    ;;
+  toggle)
+    toggle_sound
+    ;;
+  list-sinks)
+    pactl list short sinks | sed "s/^$(read_active_sink)/*$(read_active_sink)/"
+    ;;
+  list-sources)
+    pactl list short sources | sed "s/^$(read_active_source)/*$(read_active_source)/"
+    ;;
+  set-sink)
+    sink=`echo "${2:-}" | awk '{print $1}'`
+    name=`echo "${2:-}" | awk '{print $3}'`
+    case "${sink}" in
+      \**)
+        echo "Warning: sink ${sink#?} is already the active sink"
+        pactl set-default-sink "${sink#?}"
+        ;;
+      ''|*[!0-9]*)
+        err "sink has to be or start with the sink number"
+        ;;
+      *)
+        pactl set-default-sink ${sink}
+        ;;
+    esac
+    [[ -f ~/.config/cava/config ]] && sed -i "s/^source = .*/source = ${name}.monitor/" ~/.config/cava/config
+    ;;
+  set-source)
+    source=`echo "${2:-}" | awk '{print $1}'`
+    case "${source}" in
+      \**)
+        echo "Warning: source is already the active source"
+        pactl set-default-source "${source#?}"
+        ;;
+      ''|*[!0-9]*)
+        err "source has to be or start with the source number"
+        ;;
+      *)
+        pactl set-default-source ${source}
+        ;;
+    esac
+    ;;
+  *)
+    usage && exit 1
+    ;;
+esac
