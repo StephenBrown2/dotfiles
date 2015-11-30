@@ -7,7 +7,7 @@
 exec --no-startup-id xrandr --output HDMI1 --mode 1680x1050 --pos 0x0 --rotate normal --output HDMI2 --primary --mode 1680x1050 --pos 1680x0 --rotate normal --output HDMI3 --mode 1680x1050 --pos 3360x0 --rotate normal
 
 # Wallpaper
-exec --no-startup-id feh --bg-fill ~/.wallpapers/Red-Tesla-Emblem-Logo-Water.jpg
+exec --no-startup-id feh --bg-fill ~/wallpapers/Red-Tesla-Emblem-Logo-Water.jpg
 
 # Compositing with compton
 exec --no-startup-id compton --config ~/.config/compton.conf -b
