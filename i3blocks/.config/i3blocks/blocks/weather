@@ -5,12 +5,17 @@ API_KEY="2de143494c0b295cca9337e1e96b00e0"
 
 MURICA=true
 
+URGENT_LOWER=273
+URGENT_HIGHER=310
+UNITS="kelvin"
+SYMBOL="K"
+
 if [[ "${MURICA}" = true ]]; then
     URGENT_LOWER=32
     URGENT_HIGHER=100
     UNITS="imperial"
     SYMBOL="℉"
-else
+elif [[ "${MURICA}" = false ]]; then
     URGENT_LOWER=0
     URGENT_HIGHER=37
     SYMBOL="℃"
@@ -59,24 +64,25 @@ WEATHER_ICON=$(echo "${WEATHER_INFO}" | jshon -e weather -a icon)
 ICON_URL="http://openweathermap.org/img/w/${WEATHER_ICON}.png"
 
 if [[ "${WEATHER_MAIN}" = *Snow* ]]; then
-  echo "${ICON_SNOW} ${WEATHER_DESC} ${WEATHER_TEMP}${SYMBOL}"
-  echo "${ICON_SNOW} ${WEATHER_TEMP}${SYMBOL}"
-  echo ""
-  exit 33
+  ICON="${ICON_SNOW}"
 elif [[ "${WEATHER_MAIN}" = *Rain* ]] || [[ "${WEATHER_MAIN}" = *Drizzle* ]]; then
-  echo "${ICON_RAINY} ${WEATHER_DESC} ${WEATHER_TEMP}${SYMBOL}"
-  echo "${ICON_RAINY} ${WEATHER_TEMP}${SYMBOL}"
-  echo ""
+  ICON="${ICON_RAINY}"
 elif [[ "${WEATHER_MAIN}" = *Cloud* ]]; then
-  echo "${ICON_CLOUDY} ${WEATHER_DESC} ${WEATHER_TEMP}${SYMBOL}"
-  echo "${ICON_CLOUDY} ${WEATHER_TEMP}${SYMBOL}"
-  echo ""
+  ICON="${ICON_CLOUDY}"
 elif [[ "${WEATHER_MAIN}" = *Clear* ]]; then
-  echo "${ICON_SUNNY} ${WEATHER_DESC} ${WEATHER_TEMP}${SYMBOL}"
-  echo "${ICON_SUNNY} ${WEATHER_TEMP}${SYMBOL}"
-  echo ""
+  ICON="${ICON_SUNNY}"
+elif [[ "${WEATHER_MAIN}" = *Extreme* ]]; then
+  URGENT_LOWER=0
+  URGENT_HIGHER=0
+  ICON=""
+else
+  ICON=""
 fi
 
-if [[ "${WEATHER_TEMP%.*}" -lt "${URGENT_LOWER}" ]] || [[ "${WEATHER_TEMP%.*}" -gt "${URGENT_HIGHER}" ]]; then
+echo "${ICON} ${WEATHER_DESC} ${WEATHER_TEMP}${SYMBOL}"
+echo "${ICON} ${WEATHER_TEMP}${SYMBOL}"
+echo ""
+
+if [[ "${URGENT_LOWER}" -eq "${URGENT_HIGHER}" ]] || [[ "${WEATHER_TEMP%.*}" -lt "${URGENT_LOWER}" ]] || [[ "${WEATHER_TEMP%.*}" -gt "${URGENT_HIGHER}" ]]; then
   exit 33
 fi
