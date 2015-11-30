@@ -15,10 +15,12 @@ if [[ "${MURICA}" = true ]]; then
     URGENT_HIGHER=100
     UNITS="imperial"
     SYMBOL="℉"
+    SYMBOL="°F"
 elif [[ "${MURICA}" = false ]]; then
     URGENT_LOWER=0
     URGENT_HIGHER=37
     SYMBOL="℃"
+    SYMBOL="°C"
     UNITS="metric"
 fi
 

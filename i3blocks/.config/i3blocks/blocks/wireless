@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+SSID=$(iwgetid -r)
+
+if [[ -n "${SSID}" ]]; then
+  echo "${SSID} "
+  echo "${SSID}"
+  echo ""
+fi

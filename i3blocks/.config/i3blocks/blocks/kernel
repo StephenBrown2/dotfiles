@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+kernel=$(pacman -Q linux | awk '{print $2}')
+echo "Arch Linux (${kernel})"
+echo " (${kernel})"
+echo ""
