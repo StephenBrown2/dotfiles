@@ -6,9 +6,11 @@ API_KEY="2de143494c0b295cca9337e1e96b00e0"
 # Check on http://openweathermap.org/find
 CITY_ID="${BLOCK_INSTANCE:-4726206}"
 
-MURICA=1
+# Use the name instead
+CITY_NAME="San Antonio,US"
+MURICA=true
 
-if [[ "${MURICA}" -gt 0 ]]; then
+if [[ "${MURICA}" ]]; then
     URGENT_LOWER=32
     URGENT_HIGHER=100
     UNITS="imperial"
@@ -26,18 +28,23 @@ ICON_RAINY=""
 ICON_STORM=""
 ICON_SNOW=""
 
+CITY_NAME=$(echo "${CITY_NAME}" | sed 's/ /%20/g')
 WEATHER_URL="http://api.openweathermap.org/data/2.5/weather?id=${CITY_ID}&appid=${API_KEY}&units=${UNITS}"
+WEATHER_URL="http://api.openweathermap.org/data/2.5/weather?q=${CITY_NAME}&appid=${API_KEY}&units=${UNITS}"
 
 WEATHER_INFO=$(curl -s "${WEATHER_URL}")
 WEATHER_MAIN=$(echo "${WEATHER_INFO}" | jshon -e weather -a -e main -u)
 WEATHER_DESC=$(echo "${WEATHER_INFO}" | jshon -e weather -a -e description -u)
 WEATHER_TEMP=$(echo "${WEATHER_INFO}" | jshon -e main -e temp | awk '{printf "%.2f", $1}')
+WEATHER_ICON=$(echo "${WEATHER_INFO}" | jshon -e weather -a icon)
+ICON_URL="http://openweathermap.org/img/w/${WEATHER_ICON}.png"
 
 if [[ "${WEATHER_MAIN}" = *Snow* ]]; then
   echo "${ICON_SNOW} ${WEATHER_DESC} ${WEATHER_TEMP}${SYMBOL}"
   echo "${ICON_SNOW} ${WEATHER_TEMP}${SYMBOL}"
   echo ""
-elif [[ "${WEATHER_MAIN}" = *Rain* ]]; then
+  exit 33
+elif [[ "${WEATHER_MAIN}" = *Rain* ]] || [[ "${WEATHER_MAIN}" = *Drizzle* ]]; then
   echo "${ICON_RAINY} ${WEATHER_DESC} ${WEATHER_TEMP}${SYMBOL}"
   echo "${ICON_RAINY} ${WEATHER_TEMP}${SYMBOL}"
   echo ""
