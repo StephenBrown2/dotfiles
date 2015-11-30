@@ -13,7 +13,7 @@ Any time I have to use a new linux box, all I have to do is install git and stow
 ```shell
 git clone --recursive https://github.com/StephenBrown2/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
-stow -v $(ls -d */ | cut -f1 -d'/')
+./create-links home/work
 ```
 
 and I have a set up identical to all my other systems.

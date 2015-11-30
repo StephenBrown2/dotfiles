@@ -1,43 +1,18 @@
 #!/bin/bash
 
-## Source:
-# Shamelessly ripped and modified from
-# https://bitbucket.org/tim_heap/.dot-files/src/20b62512624e/create-links
-##
+stowpkgs=()
 
-for file in [a-zA-Z]* ; do
-    if [[ "$file" != "create-links" && "$file" != "README" && "$file" != "README.md" ]] ; then
-
-        if [[ "$file" == "bin" ]]; then
-            if [[ ! -d ~/bin || ! -h ~/bin ]] ; then
-                ln -s `pwd`/bin ~/;
-            elif [[ -d ~/bin && ! -h ~/bin ]]; then
-                for binfile in bin/[a-zA-Z]* ; do
-                if [[ -h ~/"$binfile" ]] ; then
-                    echo "  Removing symbolic link ~/$binfile"
-                    rm ~/"$binfile"
-                elif [[ -a ~/"$binfile" ]] ; then
-                    date=$(date '+%FT%T');
-                    echo "  ~/$binfile exists. Moving it to ~/$binfile.back.$date"
-                    mv ~/"$binfile" ~/"$binfile".back.$date || echo "Couldn't move ~/$binfile to ~/$binfile.back.$date!"
-                fi
-
-                echo "ln -s `pwd`/\"$binfile\" ~/\"$binfile\"" && echo "Linked ~/$binfile to `pwd`/$binfile" || echo "Couldn't link ~/$binfile to `pwd`/$binfile!"
-                #ln -s `pwd`/bin/"$binfile" ~/bin/"$binfile" && echo "Linked ~/bin/$binfile to `pwd`/bin/$binfile" || echo "Couldn't link ~/bin/$binfile to `pwd`/bin/$binfile!"
-                done
-            fi
-            continue
-        fi
-
-        if [[ -h ~/."$file" ]] ; then
-            echo "  Removing symbolic link ~/.$file"
-            rm ~/."$file"
-        elif [[ -a ~/."$file" ]] ; then
-            date=$(date '+%FT%T');
-            echo "  ~/.$file exists. Moving it to ~/.$file.back.$date"
-            mv ~/."$file" ~/."$file".back.$date || echo "Couldn't move ~/.$file to ~/.$file.back.$date!"
-        fi
-
-        ln -s `pwd`/"$file" ~/."$file" && echo "Linked ~/.$file to `pwd`/$file" || echo "Couldn't link ~/.$file to `pwd`/$file!"
-    fi
-done
+if [[ $# = 1 ]]; then
+  if [[ $1 = "home" ]]; then
+    echo "It's home time"
+    stowpkgs+=(bash bin dupeGuru git gtk2 gtk3 pics rack remind shell sublime-text-3 terminator termite tmux vim zgen zsh)
+  elif [[ $1 = "work" ]]; then
+    echo "It's workin time!"
+    stowpkgs+=(bash bin git gtk2 gtk3 pics rack remind shell sublime-text-3 terminator termite tmux vim zgen zsh)
+    stowpkgs+=(cava compton hammercloud i3 i3blocks i3lock overtime sway volumectl work)
+  fi
+else
+  echo "Please choose 'home' or 'work'"
+  exit
+fi
+stow -Rv ${stowpkgs[@]}
