@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+shopt -s extglob
 
 xrandrOut=$(xrandr)
 
@@ -9,6 +10,8 @@ edpName=$(echo "${xrandrOut}" | grep -i 'EDP' | awk '{print $1}')
 dpName=$(echo "${xrandrOut}" | grep -i 'DP' | awk '{print $1}')
 
 activeDisplays=$(echo "${xrandrOut}" | grep " connected" | sed -e "s/\([a-zA-Z0-9]\+\) connected.*/\1/" | tr -s '\n' ' ')
+activeDisplays=${activeDisplays##*( )}
+activeDisplays=${activeDisplays%%*( )}
 displayFile='/tmp/.displays'
 
 if [[ -f "${displayFile}" ]]; then
