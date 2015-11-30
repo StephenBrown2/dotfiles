@@ -3,21 +3,16 @@
 
 API_KEY="2de143494c0b295cca9337e1e96b00e0"
 
-# Check on http://openweathermap.org/find
-CITY_ID="${BLOCK_INSTANCE:-4726206}"
-
-# Use the name instead
-CITY_NAME="San Antonio,US"
 MURICA=true
 
-if [[ "${MURICA}" ]]; then
+if [[ "${MURICA}" = true ]]; then
     URGENT_LOWER=32
     URGENT_HIGHER=100
     UNITS="imperial"
     SYMBOL="℉"
 else
     URGENT_LOWER=0
-    URGENT_HIGHER=30
+    URGENT_HIGHER=37
     SYMBOL="℃"
     UNITS="metric"
 fi
@@ -28,9 +23,33 @@ ICON_RAINY=""
 ICON_STORM=""
 ICON_SNOW=""
 
-CITY_NAME=$(echo "${CITY_NAME}" | sed 's/ /%20/g')
-WEATHER_URL="http://api.openweathermap.org/data/2.5/weather?id=${CITY_ID}&appid=${API_KEY}&units=${UNITS}"
-WEATHER_URL="http://api.openweathermap.org/data/2.5/weather?q=${CITY_NAME}&appid=${API_KEY}&units=${UNITS}"
+# Check on http://openweathermap.org/find
+BASE_URL="http://api.openweathermap.org/data/2.5/weather?appid=${API_KEY}&units=${UNITS}"
+INSTANCE="${BLOCK_INSTANCE:-4726206}"
+
+if [[ "${INSTANCE}" =~ ^[0-9]{7}$ ]]; then
+    CITY_ID=${INSTANCE}
+    WEATHER_URL="${BASE_URL}&id=${CITY_ID}"
+elif [[ "${INSTANCE}" =~ ^[0-9]{5}$ ]]; then
+    CITY_ZIP=${INSTANCE}
+    WEATHER_URL="${BASE_URL}&zip=${CITY_ZIP}"
+elif [[ "${INSTANCE}" =~ ^([0-9]{5}),([a-zA-Z]{2})$ ]]; then
+    CITY_ZIP=${BASH_REMATCH[1]}
+    COUNTRY_CODE=${BASH_REMATCH[2]}
+    WEATHER_URL="${BASE_URL}&zip=${CITY_ZIP},${COUNTRY_CODE}"
+elif [[ "${INSTANCE}" =~ ^([0-9.-]+),([0-9.-]+)$ ]]; then
+    LAT=${BASH_REMATCH[1]}
+    LON=${BASH_REMATCH[2]}
+    WEATHER_URL="${BASE_URL}&lat=${LAT}&lon=${LON}"
+elif [[ "${INSTANCE}" =~ ^([a-zA-Z ]+),([a-zA-Z]{2})$ ]]; then
+    CITY_NAME=$( echo "${BASH_REMATCH[1]}" | sed 's/ /%20/g')
+    COUNTRY_CODE=${BASH_REMATCH[2]}
+    WEATHER_URL="${BASE_URL}&q=${CITY_NAME},${COUNTRY_CODE}"
+else
+    echo "Didn't match anything."
+    echo "This should never happen."
+    exit 22
+fi
 
 WEATHER_INFO=$(curl -s "${WEATHER_URL}")
 WEATHER_MAIN=$(echo "${WEATHER_INFO}" | jshon -e weather -a -e main -u)
@@ -58,6 +77,6 @@ elif [[ "${WEATHER_MAIN}" = *Clear* ]]; then
   echo ""
 fi
 
-if (( "${WEATHER_TEMP%.*}" < "${URGENT_LOWER}" )) || (( "${WEATHER_TEMP%.*}" > "${URGENT_HIGHER}" )); then
+if [[ "${WEATHER_TEMP%.*}" -lt "${URGENT_LOWER}" ]] || [[ "${WEATHER_TEMP%.*}" -gt "${URGENT_HIGHER}" ]]; then
   exit 33
 fi
