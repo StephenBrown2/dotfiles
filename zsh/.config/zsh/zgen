@@ -3,6 +3,7 @@ if ! zgen saved; then
   
   zgen load rimraf/k
   zgen load djui/alias-tips
+  zgen load hlissner/zsh-autopair
   zgen load arzzen/calc.plugin.zsh
   zgen load unixorn/git-extra-commands
   zgen load olivierverdier/zsh-git-prompt
