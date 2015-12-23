@@ -2,4 +2,4 @@
 # Original source: https://github.com/Airblader/volumectl
 set -eu
 
-volumectl list-sinks | awk '{print $1" | "$2}' | dmenu -l 10 -i "$@" | xargs volumectl set-sink
+volumectl list-sinks | awk '{print $1" | "$2}' | column -to' ' | rofi -dmenu | xargs volumectl set-sink
