@@ -1,0 +1,15 @@
+#!/bin/bash
+
+VPNC_FILE=('/var/run/vpnc.pid' '/var/run/vpnc/pid')
+
+if [[ $(pgrep vpnc) ]] || [[ $(pgrep openvpn) ]]; then
+  provider=$(cat /tmp/vpnprovider)
+  echo "on: $provider"
+  echo "on"
+  echo ""
+else
+  echo "off"
+  echo "off"
+  echo ""
+  exit 125
+fi
