@@ -3,8 +3,8 @@
 maim /tmp/screen.png
 
 # Figure out the dimensions of the screen
-screenheight=$(identify -format "%H" /tmp/screen.png)
 screenwidth=$(identify -format "%W" /tmp/screen.png)
+screenheight=$(identify -format "%H" /tmp/screen.png)
 
 # Make sure the comic fits inside it well
 maxheight=${$((${screenheight}*.98))%%.*}
@@ -15,8 +15,8 @@ maxheight=${$((${screenheight}*.98))%%.*}
 pixscale=$(( ( RANDOM % 20 ) + 1))
 rescale=${$((1./${pixscale}*10000))%%.*}
 
-# Pixelate!
-convert /tmp/screen.png -scale ${pixscale}% -scale ${rescale}% /tmp/screen.png
+# Pixelate! (Takes a couple seconds, trimmed using thumbnail first)
+convert /tmp/screen.png -thumbnail ${pixscale}% -scale ${rescale}% /tmp/screen.png
 
 # Now we get our comic and alt text
 eval $(~/.local/bin/randxkcd.sh)

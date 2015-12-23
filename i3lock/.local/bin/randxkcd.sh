@@ -33,12 +33,17 @@ function imgurl() {
 # Using the modulo operator has the possibility of
 # yielding 0, so we subtract one from Number_Of_Comics,
 # and add it again at the end
-random=404
+if [[ "$1" == "--xkcd-true-behavior" ]]; then
+  random=4
+elif [[ "$1" =~ [0-9]+ ]]; then
+  random=$1
+else
+  random=404
+fi
 until [[ ! -f ${CACHE}/${random}.ban ]]; do
   random=$(( ( RANDOM % ( `lastnum` - 1  ) ) + 1))
 done
 
-[[ "$1" == "--xkcd-true-behavior" ]] && random=4
 # Fetch the random json, parse its goodness
 getinfo ${random}
 image=$(imgurl ${random})
@@ -61,7 +66,7 @@ wget --quiet --continue "$image" -O ${random}_$(basename $image) ||
      exit 1; } # Still error handling
 
 # Now all that's left to do is to print the path to the comic
-echo "filename=${CACHE}/${random}_$(basename "$image")"
+echo "filename=\"${CACHE}/${random}_$(basename "$image")\""
 echo "alttext=${alt}"
 echo "title=${title}"
 echo "number=${random}"
