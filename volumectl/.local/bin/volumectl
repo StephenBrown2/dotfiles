@@ -123,14 +123,15 @@ case "${1:-}" in
         pactl set-default-sink ${sink}
         ;;
     esac
-    [[ -f ~/.config/cava/config ]] && sed -i "s/^source = .*/source = ${name}.monitor/" ~/.config/cava/config
     ;;
   set-source)
     source=`echo "${2:-}" | awk '{print $1}'`
+    name=`echo "${2:-}" | awk '{print $3}'`
     case "${source}" in
       \**)
         echo "Warning: source is already the active source"
         pactl set-default-source "${source#?}"
+        [[ -f ~/.config/cava/config ]] && sed -i "s/^source = .*/source = ${name#?}.monitor/" ~/.config/cava/config
         ;;
       ''|*[!0-9]*)
         err "source has to be or start with the source number"
