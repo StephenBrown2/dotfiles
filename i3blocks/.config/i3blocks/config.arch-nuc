@@ -32,31 +32,32 @@ separator_block_width=10
 
 # Blocks
 
-[windowtitle]
-command=xtitle -is
-interval=persist
-
-[icanhazip]
-label=
-interval=once
-
-[icanhazlocalip]
-label=
-interval=once
-
-[bandwidth_down]
-name=bandwidth
-instance=eno1;in
-label=
+[workspaces]
+instance=default
 interval=1
-min_width=38
+markup=pango
 
-[bandwidth_up]
-name=bandwidth
-instance=eno1;out
-label=
-interval=1
-min_width=38
+#[icanhazip]
+#label=
+#interval=once
+
+#[icanhazlocalip]
+#label=
+#interval=once
+
+#[bandwidth_down]
+#name=bandwidth
+#instance=eno1;in
+#label=
+#interval=1
+#min_width=38
+
+#[bandwidth_up]
+#name=bandwidth
+#instance=eno1;out
+#label=
+#interval=1
+#min_width=38
 
 [network_lan]
 name=network
@@ -64,16 +65,15 @@ label=
 instance=eno1
 interval=10
 
-[network_wan]
-name=network
-label=
-instance=wlp3s0
-interval=10
-
-[wireless]
-label=
+#[network_wan]
+#name=network
 #label=
-interval=5
+#instance=wlp3s0
+#interval=10
+
+#[ssid]
+#label=
+#interval=5
 
 [firewall]
 label=
@@ -87,14 +87,18 @@ interval=10
 label=
 interval=10
 
-[battery]
+[bluetooth]
+label=
+interval=10
+
+[batticons]
 label=
 instance=0
 interval=5
 
-[brightness]
-label= 
-interval=5
+#[brightness]
+#label=
+#interval=5
 
 [audio]
 label=
@@ -122,19 +126,23 @@ interval=1
 
 [memory_mem]
 name=memory
-label=
+label=
 instance=mem;available
 interval=30
 
 [memory_swap]
 name=memory
-label=
+label=
 instance=swap;total
 interval=30
 
 [space]
-label=
-instance=/
+label=
+instance=/;free
+interval=30
+
+[space]
+label=
 interval=30
 
 [cpu]
@@ -145,24 +153,28 @@ interval=2
 label=
 interval=300
 
-[user]
-label=
-interval=once
+#[user]
+#label=
+#interval=once
 
-[locale]
-label=
-interval=once
+#[locale]
+#label=
+#interval=once
 
-[display]
-label=
-interval=5
+#[display]
+#label=
+#interval=5
 
 [weather]
 instance=4726206
 interval=300
 
+[trash]
+label=
+interval=10
+
 [kernel]
-label=
+label=
 interval=once
 
 [datetime]

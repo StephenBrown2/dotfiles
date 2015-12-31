@@ -27,8 +27,12 @@ elif [[ "${SHOW}" = "perc" ]]; then
   VALUE="${PERC_SPACE}%"
 fi
 
+if [[ "${INSTANCE}" == "${HOME}" ]]; then
+  INSTANCE="~"
+fi
+
 if [[ "${VALUE}" ]]; then
-  echo "${VALUE}"
+  echo "${INSTANCE}: ${VALUE}"
   echo "${VALUE}"
   echo ""
 fi

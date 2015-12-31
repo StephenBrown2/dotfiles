@@ -12,7 +12,7 @@ esac
 
 IP=$(cat "${PREV_FILE}")
 
-echo "E:$IP"
-echo "E:$IP"
+echo "$IP"
+echo "$IP"
 echo ""
 

@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# dependencies: trash-cli
+
+# Left click
+if [[ "${BLOCK_BUTTON}" -eq 1 ]]; then
+  xdg-open "trash://"
+# Right click
+elif [[ "${BLOCK_BUTTON}" -eq 3 ]]; then
+  trash-empty
+fi
+
+TRASH_COUNT=$(trash-list | wc -l)
+
+URGENT_VALUE=100
+
+echo "${TRASH_COUNT}"
+echo "${TRASH_COUNT}"
+echo ""
+
+if [[ "${TRASH_COUNT}" -ge "${URGENT_VALUE}" ]]; then
+  exit 33
+fi
