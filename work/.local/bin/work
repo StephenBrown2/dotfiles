@@ -83,7 +83,9 @@ log 'Smartsheet Chromium App'
 log 'Google Play Music Chromium App'
 /usr/bin/chromium --profile-directory=Default --app-id=fahmaaghhglfmonjliepjlchgpgfmobi &
 
-termite -e cava -t cava -c ~/.config/termite/config.cava --geometry=540x296 &
+log 'Terminal audio visualizer'
+#termite -e cava -t cava -c ~/.config/termite/config.cava --geometry=540x296 &
+urxvt -depth 32 -foreground '#B0B0B0' -background rgba:2000/2000/2000/0000 -fn 'xft:DejaVu Sans Mono:pixelsize=2' -geometry 179x98 -e cava &
 
 log 'Google Hangouts Chromium App'
 /usr/bin/chromium --profile-directory=Default --app-id=knipolnnllmklapflnccelgolnpehhpl &
