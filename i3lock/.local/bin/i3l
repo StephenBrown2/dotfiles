@@ -12,7 +12,7 @@ maxheight=${$((${screenheight}*.98))%%.*}
 # How blurry should we make it?
 # (Smaller pixscale=bigger pixels)
 #pixscale=5
-pixscale=$(( ( RANDOM % 20 ) + 1))
+pixscale=$(( ( RANDOM % 15 ) + 1))
 rescale=${$((1./${pixscale}*10000))%%.*}
 
 # Pixelate! (Takes a couple seconds, trimmed using thumbnail first)
