@@ -45,13 +45,14 @@ set $up_key l
 set $right_key semicolon
 
 # Colors
-set $background #200907
-set $foreground #801410
-set $gray #d4cfc3
-set $primary #a01613
-set $secondary #a01513
-set $tertiary #a01513
-set $warning #a51a15
+set $background #010203
+set $foreground #96100F
+set $gray #889791
+set $primary #C40022
+set $secondary #DA0004
+set $tertiary #9E000C
+set $warning #CC0000
+set $separator #CFCAC6
 
 # Display configuration
 # - i3wm
@@ -217,7 +218,7 @@ bar {
     colors {
         background $background
         statusline $primary
-        separator #757575
+        separator $separator
         #                  border      background         text
         focused_workspace  $secondary  $background $foreground
         active_workspace   $primary    $background $foreground
@@ -240,7 +241,7 @@ bar {
     colors {
         background $background
         statusline $primary
-        separator #757575
+        separator $separator
         #                  border      background         text
         focused_workspace  $secondary  $background $foreground
         active_workspace   $primary    $background $foreground
@@ -259,7 +260,7 @@ bar {
     colors {
         background $background
         statusline $primary
-        separator #757575
+        separator $separator
         #                  border      background         text
         focused_workspace  $secondary  $background $foreground
         active_workspace   $primary    $background $foreground
