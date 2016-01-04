@@ -8,13 +8,13 @@
 
 # Outputs
 # - i3wm
-#set $left_monitor    HDMI1
-#set $primary_monitor HDMI2
-#set $right_monitor   HDMI3
+set $left_monitor    HDMI1
+set $primary_monitor HDMI2
+set $right_monitor   HDMI3
 # - sway
-set $left_monitor    HDMI-A-1
-set $primary_monitor HDMI-A-2
-set $right_monitor   HDMI-A-3
+#set $left_monitor    HDMI-A-1
+#set $primary_monitor HDMI-A-2
+#set $right_monitor   HDMI-A-3
 
 # Workspaces
 set $ws1 1:
@@ -55,21 +55,21 @@ set $warning #a51a15
 
 # Display configuration
 # - i3wm
-#exec --no-startup-id xrandr --output $left_monitor --mode 1680x1050 --pos 0x0 --rotate normal --output $primary_monitor --primary --mode 1680x1050 --pos 1680x0 --rotate normal --output $right_monitor --mode 1680x1050 --pos 3360x0 --rotate normal
+exec --no-startup-id xrandr --output $left_monitor --mode 1680x1050 --pos 0x0 --rotate normal --output $primary_monitor --primary --mode 1680x1050 --pos 1680x0 --rotate normal --output $right_monitor --mode 1680x1050 --pos 3360x0 --rotate normal
 # - sway
-output $left_monitor resolution 1680x1050 position 0,0
-output $primary_monitor resolution 1680x1050 position 1680,0
-output $right_monitor resolution 1680x1050 position 3360,0
+#output $left_monitor resolution 1680x1050 position 0,0
+#output $primary_monitor resolution 1680x1050 position 1680,0
+#output $right_monitor resolution 1680x1050 position 3360,0
 
 # Wallpaper
 # - i3wm
-#exec --no-startup-id feh --bg-fill ~/wallpapers/Red-Tesla-Emblem-Logo-Water.jpg
+exec --no-startup-id feh --bg-fill ~/wallpapers/Red-Tesla-Emblem-Logo-Water.jpg
 # - sway
-output * background ~/wallpapers/Red-Tesla-Emblem-Logo-Water.jpg fill
+#output * background ~/wallpapers/Red-Tesla-Emblem-Logo-Water.jpg fill
 
 # Compositing with compton
 # - i3wm
-#exec --no-startup-id compton --config ~/.config/compton.conf -b
+exec --no-startup-id compton --config ~/.config/compton.conf -b
 
 # Window handling
 for_window [window_role="popup"] floating enable
@@ -270,6 +270,6 @@ bar {
 
 # Restore layout(s)
 # - i3wm
-#exec --no-startup-id "i3-msg 'workspace 1; append_layout ~/.config/i3/work-workspace-1.json'"
-#exec --no-startup-id "i3-msg 'workspace 2; append_layout ~/.config/i3/work-workspace-2.json'"
-#exec --no-startup-id "i3-msg 'workspace 3; append_layout ~/.config/i3/work-workspace-3.json'"
+exec --no-startup-id "i3-msg 'workspace 1; append_layout ~/.config/i3/work-workspace-1.json'"
+exec --no-startup-id "i3-msg 'workspace 2; append_layout ~/.config/i3/work-workspace-2.json'"
+exec --no-startup-id "i3-msg 'workspace 3; append_layout ~/.config/i3/work-workspace-3.json'"

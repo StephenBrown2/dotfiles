@@ -1,4 +1,5 @@
-// Slack on the left half
+// Slack on the top left half
+// Hangouts on the bottom left
 {
     "layout": "splitv",
     "percent": 0.5,
@@ -63,8 +64,8 @@
                     "type": "con",
                     "swallows": [
                         {
-                            "class": "^Termite$",
-                            "instance": "^termite$",
+                            "class": "^Term|xvt$",
+                            "instance": "^term|xvt$",
                             "title": "cava"
                         }
                     ]
