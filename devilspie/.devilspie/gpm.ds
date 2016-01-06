@@ -1,0 +1,7 @@
+(if
+    (and
+        (is (window_class) 'chromium')
+        (is (window_name) 'Google Play Music')
+    )
+    (geometry "301x301+4740+725")
+)

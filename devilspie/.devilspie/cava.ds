@@ -1,0 +1,7 @@
+(if
+    (is (window_name) 'cava')
+    (begin
+        (geometry "541x300+4200+725")
+        (below)
+    )
+)

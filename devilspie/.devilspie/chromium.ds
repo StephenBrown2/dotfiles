@@ -1,0 +1,11 @@
+(if
+    (and
+        (matches (application_name) 'Chromium$')
+        (matches (window_name) 'Chromium$')
+        (is (window_class) 'chromium')
+    )
+    (begin
+        (geometry "+1680+0")
+        (maximize)
+    )
+)

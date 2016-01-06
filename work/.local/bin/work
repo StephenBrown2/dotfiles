@@ -32,11 +32,15 @@ if (( $(date +%w) >= 0 )); then
     fi
   elif [ $ID == "arch" ]; then
     packer -Syyu
-    if [[ -n $I3SOCK ]]; then
+    if [[ $DESKTOP_SESSION == 'cinnamon' ]]; then
+      devilspie &
+    elif [[ $DESKTOP_SESSION == 'i3' ]]; then
       echo "Running i3, setting up the layouts"
       i3-msg "workspace 1; append_layout ~/.config/i3/work-workspace-1.json"
       i3-msg "workspace 2; append_layout ~/.config/i3/work-workspace-2.json"
       i3-msg "workspace 3; append_layout ~/.config/i3/work-workspace-3.json"
+    else
+      echo "You're running sway, aren't you? Lay it out yourself."
     fi
   else
     echo "I don't know what $ID is, so I can't update it."
