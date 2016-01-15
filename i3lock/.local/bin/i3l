@@ -1,6 +1,23 @@
 #!/usr/bin/env zsh
-# Take a screenshot first
+#Make DBUS work
+env | grep DBUS_SESSION_BUS_ADDRESS
+env | grep XAUTHORITY
+
+# Start counting time here
+START="$(date +%s%N)"
+
+# Set Pidgin status
+purple-remote "setstatus?status=away&message=AFK"
+
+# Take a screenshot
 maim /tmp/screen.png
+
+# Pause the music
+vol=$((parec --device=$(pacmd list-sinks | awk '/*/{print $NF}') --latency=2 --channels=1 | od -N2 -td2 | head -n1 | cut -d' ' -f2- | tr -d ' ' | perl -pe 's/^-//') 2>/dev/null)
+if [ $vol -gt 0 ]; then
+    echo $vol
+    xdotool key XF86AudioPlay
+fi
 
 # Figure out the dimensions of the screen
 screenwidth=$(identify -format "%W" /tmp/screen.png)
@@ -35,6 +52,10 @@ convert "${captionoptions[@]}" caption:"Comic #${number}: ${title}" -append ${fi
 # Stick the comic smack dab in the middle of the pixelated background
 convert -gravity center -composite /tmp/screen.png /tmp/xkcd-alt.png /tmp/screen.png
 
+# Log the time taken
+END="$(date +%s%N)"
+echo "time=$(echo "$END - $START" | bc), pixscale=$pixscale" >> /var/log/i3l.log
+
 # Finally, lock the screen!
 i3lock -efi /tmp/screen.png
 
@@ -42,3 +63,6 @@ i3lock -efi /tmp/screen.png
 for file in screen.png xkcd.png xkcd-alt.png; do
   [[ -f /tmp/$file ]] && rm /tmp/$file
 done
+
+# I'm back!
+purple-remote "setstatus?status=available&message="
