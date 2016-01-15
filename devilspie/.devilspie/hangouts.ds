@@ -1,7 +1,10 @@
 (if
     (and
         (is (window_class) 'chromium')
-        (matches (window_name) '^Hangouts')
+        (or
+            (matches (window_name) '^Hangouts')
+            (is (window_name) 'Google Hangouts')
+        )
     )
     (geometry "840x300+3360+725")
 )

@@ -1,7 +1,10 @@
 (if
-    (is (window_name) 'cava')
+    (or
+        (is (window_name) 'cava')
+        (is (window_name) 'vis')
+    )
     (begin
-        (geometry "541x300+4200+725")
+        (geometry "515x325+4200+725")
         (below)
     )
 )
