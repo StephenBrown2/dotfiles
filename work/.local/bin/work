@@ -72,7 +72,13 @@ sleep 5;
 log 'starting Slack';
 slack &
 sleep 5;
-
+log 'starting go-nucleus-agent';
+cd ~/gocode
+export GOPATH=`pwd`
+go get github.com/boltdb/bolt/
+cd src/go-nucleus-agent
+git pull
+go run ${GOPATH}/src/go-nucleus-agent/go-nucleus-agent.go -profile `ls -d ~/.mozilla/firefox/*.default` -terminal-path=terminator  -terminal-args=-x >/var/log/fission.log &
 log 'starting Firefox';
 firefox 1>&2 2>/dev/null &
 #/home/stephen/ff-35.0.1/firefox 2>/dev/null &
@@ -89,7 +95,7 @@ log 'Google Play Music Chromium App'
 
 log 'Terminal audio visualizer'
 #termite -e cava -t cava -c ~/.config/termite/config.cava --geometry=540x296 &
-urxvt -depth 32 -foreground '#B0B0B0' -background rgba:2000/2000/2000/0000 -fn 'xft:DejaVu Sans Mono:pixelsize=2' -geometry 179x98 -e cava &
+urxvt -depth 32 -foreground '#B0B0B0' -background rgba:2000/2000/2000/aaaa -fn 'xft:DejaVu Sans Mono:pixelsize=2' -geometry 179x98 -e vis &
 
 log 'Google Hangouts Chromium App'
 /usr/bin/chromium --profile-directory=Default --app-id=knipolnnllmklapflnccelgolnpehhpl &
@@ -99,4 +105,10 @@ subl3 2>/dev/null &
 #sleep 5;
 #log 'starting away-on-lock script'
 #/home/stephen/src/aol.py &
+
+# Retile windows, just in case
+devilspie -a &
+# Kill dat proc
+[ $(pgrep devilspie | wc -l) -gt 1 ] && kill $(pgrep devilspie | tail -1)
+
 log 'done!'
