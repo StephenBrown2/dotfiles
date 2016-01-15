@@ -29,6 +29,12 @@ if [ -f ~/.config/zsh/aliases ]; then
     source ~/.config/zsh/aliases
 fi
 
+if [ -d ~/.config/zsh/completions ]; then
+    for f in ~/.config/zsh/completions/*; do
+        source $f
+    done
+fi
+
 # Source zgen (before prompt, for reasons)
 if [ -f ~/.config/zgen/zgen.zsh ]; then
     export ZGEN_DIR=$XDG_CONFIG_HOME/zgen
