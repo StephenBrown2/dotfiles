@@ -3,5 +3,5 @@
         (is (window_class) 'Slack')
         (matches (window_name) 'Slack$')
     )
-    (geometry "840x701+3360+0")
+    (geometry "840x700+3360+0")
 )

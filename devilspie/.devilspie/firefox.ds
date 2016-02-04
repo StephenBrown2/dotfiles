@@ -1,5 +1,8 @@
 (if
-    (is (application_name) 'Firefox')
+    (and
+        (is (application_name) 'Firefox')
+        (is (window_role) 'browser')
+    )
     (begin
         (geometry "+0+0")
         (maximize)

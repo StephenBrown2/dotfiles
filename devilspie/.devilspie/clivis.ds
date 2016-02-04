@@ -2,6 +2,7 @@
     (or
         (is (window_name) 'cava')
         (is (window_name) 'vis')
+        (is (window_name) 'visualizer')
     )
     (begin
         (geometry "515x325+4200+725")
