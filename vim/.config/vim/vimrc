@@ -3,9 +3,9 @@ if version >= 700
 "------ Environment ------"
 set directory=$XDG_CACHE_HOME/vim,~/,/tmp
 set backupdir=$XDG_CACHE_HOME/vim,~/,/tmp
-set viminfo+=n$XDG_CACHE_HOME/vim/viminfo
-set runtimepath=$XDG_CONFIG_HOME/vim,$XDG_CONFIG_HOME/vim/after,$VIM,$VIMRUNTIME
-let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc"
+"set viminfo+=n$XDG_CACHE_HOME/vim/viminfo
+"set runtimepath=$XDG_CONFIG_HOME/vim,$XDG_CONFIG_HOME/vim/after,$VIM,$VIMRUNTIME
+"let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc"
 
 "------ Meta ------"
 
@@ -41,11 +41,11 @@ if has('syntax')
         set t_Co=256
     endif
 
-    if &t_Co == 256
-        colorscheme xoria256
-    else
-        colorscheme peachpuff
-    endif
+"    if &t_Co == 256
+"        colorscheme xoria256
+"    else
+"        colorscheme peachpuff
+"    endif
 endif
 
 "------ Text editing and searching behavior ------"
