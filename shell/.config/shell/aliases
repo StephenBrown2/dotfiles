@@ -84,3 +84,11 @@ function swap() {
     mv -f $temp $second;
 }
 
+function docker-ip() {                                                                                                           /h/s/sr/minority-report (master #%) [Mon May 23 08:34:33]
+  sudo docker inspect --format '{{ .NetworkSettings.IPAddress }}' "$@"
+}
+
+function new-etherpad() {
+  ethersync --host='https://etherpad.rax.io' -p $1 -f <( sed "s/TICKETNUMBER/$1/" /home/stephen/src/ER-Maint_linuxscripts/etherpad-template) &
+  export ETHERPID=$! && sleep 5 && kill -s SIGINT $ETHERPID
+}
