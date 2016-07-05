@@ -19,6 +19,7 @@ terminal:
   geometry: 80x24
   use_colors: yes
   rdpwin_path: /home/stephen/.local/bin/rdpwin
+  use_vmplayer: True
 authentication:
   is_service: no
   username: step7212
