@@ -31,14 +31,18 @@ if (( $(date +%w) >= 0 )); then
       /usr/bin/cinnamon-session-quit --reboot
     fi
   elif [ $ID == "arch" ]; then
-    apacman -Syyu
+    apacman --quickcheck | grep linux && REBOOT=true || REBOOT=false
+    pacaur -Syyu --needed --devel
+    if [[ $REBOOT == true ]]; then
+      shutdown -r 10 'Reboot because kernel update'
+    fi
     if [[ $DESKTOP_SESSION == 'cinnamon' ]]; then
       devilspie &
     elif [[ $DESKTOP_SESSION == 'i3' ]]; then
       echo "Running i3, setting up the layouts"
-      i3-msg "workspace 1; append_layout ~/.config/i3/work-workspace-1.json"
-      i3-msg "workspace 2; append_layout ~/.config/i3/work-workspace-2.json"
-      i3-msg "workspace 3; append_layout ~/.config/i3/work-workspace-3.json"
+      i3-msg "workspace 1:; append_layout ~/.config/i3/work-workspace-1.json"
+      i3-msg "workspace 2:; append_layout ~/.config/i3/work-workspace-2.json"
+      i3-msg "workspace 3:; append_layout ~/.config/i3/work-workspace-3.json"
     else
       echo "You're running sway, aren't you? Lay it out yourself."
     fi
@@ -46,6 +50,7 @@ if (( $(date +%w) >= 0 )); then
     echo "I don't know what $ID is, so I can't update it."
   fi
 fi
+echo
 log 'Is the internet on fire?';
 dig +short txt istheinternetonfire.com
 log 'getting intensive password';
@@ -54,7 +59,12 @@ log 'getting intensive password';
 #log 'setting up ssh proxy';
 #ssh -fnND 4444 bastion &
 log 'setting up bastion proxy';
-bastion-login dfw
+for dc in dfw hkg iad lon3 lon5 ord syd; do
+    echo "Authing to $dc firewall...";
+    authnet.sh -d $dc -l -u step7212 -v \
+    && sleep 60 || echo "Whoops, try $dc again later";
+done
+
 sleep 5;
 #log 'checking mountpoint';
 #( mountpoint '/media/stephen/Data' && VBoxManage startvm --type gui 632f2be0-2865-4b06-a527-b5a8c3dcd424 & ) | tee -a $logfile
@@ -90,12 +100,14 @@ sleep 5;
 log 'Smartsheet Chromium App'
 /usr/bin/chromium --profile-directory=Default --app-id=alehdleagcgnimdipdmllebddejplpbi &
 
-log 'Google Play Music Chromium App'
-/usr/bin/chromium --profile-directory=Default --app-id=fahmaaghhglfmonjliepjlchgpgfmobi &
+log 'Google Play Music'
+#/usr/bin/chromium --profile-directory=Default --app-id=fahmaaghhglfmonjliepjlchgpgfmobi &
+# cd /home/stephen/src/Google-Play-Music-Desktop-Player-UNOFFICIAL- && git pull && rm -rf node_modules && npm install && npm run build && npm start &
+google-play-music-desktop-player &
 
 log 'Terminal audio visualizer'
 #termite -e cava -t cava -c ~/.config/termite/config.cava --geometry=540x296 &
-urxvt -depth 32 -foreground '#B0B0B0' -background rgba:2000/2000/2000/aaaa -fn 'xft:DejaVu Sans Mono:pixelsize=2' -geometry 179x98 -name visualizer -e vis &
+urxvt +sb -depth 32 -foreground '#B0B0B0' -background rgba:2000/2000/2000/aaaa -fn 'xft:DejaVu Sans Mono:pixelsize=2' -geometry 179x98 -name visualizer -e vis &
 
 log 'Google Hangouts Chromium App'
 /usr/bin/chromium --profile-directory=Default --app-id=knipolnnllmklapflnccelgolnpehhpl &
