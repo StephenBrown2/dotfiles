@@ -32,10 +32,18 @@ separator_block_width=10
 
 # Blocks
 
-[workspaces]
-instance=default
+[gpmdp]
+label=
+instance=t-A-p
 interval=1
-markup=pango
+
+[nightscout]
+label=💧
+interval=300
+#[workspaces]
+#instance=default
+#interval=1
+#markup=pango
 
 #[icanhazip]
 #label=
