@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Based on http://openweathermap.org/current
 
-API_KEY="2de143494c0b295cca9337e1e96b00e0"
+API_KEY="8a16c18406dea239a9a5cbd13eac8707"
 
 MURICA=true
 
@@ -59,6 +59,8 @@ else
 fi
 
 WEATHER_INFO=$(curl -s "${WEATHER_URL}")
+ERROR_CODE=$(echo "${WEATHER_INFO}" | jshon -e cod -u 2>/dev/null)
+ERROR_MESSAGE=$(echo "${WEATHER_INFO}" | jshon -e message -u 2>/dev/null)
 WEATHER_MAIN=$(echo "${WEATHER_INFO}" | jshon -e weather -a -e main -u)
 WEATHER_DESC=$(echo "${WEATHER_INFO}" | jshon -e weather -a -e description -u)
 WEATHER_TEMP=$(echo "${WEATHER_INFO}" | jshon -e main -e temp | awk '{printf "%.2f", $1}')
@@ -77,6 +79,11 @@ elif [[ "${WEATHER_MAIN}" = *Extreme* ]]; then
   URGENT_LOWER=0
   URGENT_HIGHER=0
   ICON=""
+elif [[ -n ${ERROR_CODE} ]]; then
+  WEATHER_DESC=${ERROR_MESSAGE}
+  WEATHER_TEMP="Err: ${ERROR_CODE}"
+  SYMBOL=""
+  ICON=""
 else
   ICON=""
 fi
@@ -85,6 +92,6 @@ echo "${ICON} ${WEATHER_DESC} ${WEATHER_TEMP}${SYMBOL}"
 echo "${ICON} ${WEATHER_TEMP}${SYMBOL}"
 echo ""
 
-if [[ "${URGENT_LOWER}" -eq "${URGENT_HIGHER}" ]] || [[ "${WEATHER_TEMP%.*}" -lt "${URGENT_LOWER}" ]] || [[ "${WEATHER_TEMP%.*}" -gt "${URGENT_HIGHER}" ]]; then
+if [[ -n ${ERROR_CODE} ]] || [[ "${URGENT_LOWER}" -eq "${URGENT_HIGHER}" ]] || [[ "${WEATHER_TEMP%.*}" -lt "${URGENT_LOWER}" ]] || [[ "${WEATHER_TEMP%.*}" -gt "${URGENT_HIGHER}" ]]; then
   exit 33
 fi
