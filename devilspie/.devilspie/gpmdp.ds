@@ -1,0 +1,8 @@
+(if
+    (and
+        (is (application_name) 'GPMDP - Mini Player')
+    )
+    (begin
+        (geometry "310x310+4755+740")
+    )
+)

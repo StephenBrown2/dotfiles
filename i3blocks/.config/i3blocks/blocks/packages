@@ -2,12 +2,42 @@
 
 source /etc/os-release
 
+run_quick_check() {
+    pacmanbin=$(which pacman)
+    pacmanconf='/etc/pacman.conf'
+    RPCURL="https://aur.archlinux.org/rpc/?v=5&type"
+    bigurl="$RPCURL=multiinfo"
+    for p in $($pacmanbin -Qqm)
+    do
+        bigurl="$bigurl&arg\[\]=$p"
+    done
+    parsed_aur="$(curl -s "$bigurl" | \
+    jshon -e results -a -e Name -u -p -e Version -u | \
+    sed 's/^$/-/' | paste -s -d '\t\n' | sort)"
+    packages="$(expac -Q '%n\t%v' | sort)"
+    comm -23 <(echo "$parsed_aur") <(echo "$packages") | cut -f 1
+    if [[ $auronly = 1 ]]
+    then
+        return
+    fi
+    if [[ -z $CHECKUPDATE_DB ]]
+    then
+        CHECKUPDATE_DB="${TMPDIR:-/tmp}/checkup-db-${USER}/"
+    fi
+    eval $(awk '/DBPath/ {print $1$2$3}' $pacmanconf)
+    DBPath="${DBPath:-/var/lib/pacman/}"
+    mkdir -p "$CHECKUPDATE_DB"
+    ln -s "${DBPath}/local" "$CHECKUPDATE_DB" &> /dev/null
+    fakeroot $pacmanbin -Sqy --dbpath "$CHECKUPDATE_DB" &> /dev/null
+    $pacmanbin -Qqu --dbpath "$CHECKUPDATE_DB" 2> /dev/null
+}
+
 if [[ "$ID" == "ubuntu" ]]; then
     PACKAGES=$(aptitude search -F '%p' '~i')
     UPGRADES=$(aptitude search -F '%p' '~U')
 else
     PACKAGES=$(pacman -Qq)
-    UPGRADES=$(packer --quickcheck)
+    UPGRADES=$(run_quick_check | grep -v git)
 fi
 
 URGENT_VALUE=25
