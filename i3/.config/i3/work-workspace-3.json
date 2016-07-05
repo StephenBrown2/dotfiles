@@ -8,7 +8,7 @@
         {
             "name": "slack",
             "type": "con",
-            "percent": 0.718095238,
+            "percent": 0.676190476,
             "swallows": [
                 {
                     "class": "^Slack$",
@@ -19,7 +19,7 @@
         {
             "name": "hangouts",
             "type": "con",
-            "percent": 0.281904762,
+            "percent": 0.323809524,
             "swallows": [
                 {
                     "class": "^chromium$",
@@ -30,7 +30,6 @@
         }
     ]
 }
-
 // Pidgin on the top right half
 // terminal running cava on the bottom left
 // Google Play Music on the bottom right
@@ -41,7 +40,7 @@
     "nodes": [
         {
             "name": "pidgin",
-            "percent": 0.718095238,
+            "percent": 0.704761905,
             "type": "con",
             "swallows": [
                 {
@@ -54,32 +53,34 @@
         {
             // stacked split container with 2 children
             "layout": "splith",
-            "percent": 0.281904762,
+            "percent": 0.295238095,
             "type": "con",
             "nodes": [
                 {
-                    "name": "cava",
-                    "percent": 0.647619048,
+                    "name": "visualizer",
+                    // 31.547619% of the whole screen
+                    "percent": 0.63095238,
                     "border": "none",
                     "type": "con",
                     "swallows": [
                         {
                             "class": "^Term|xvt$",
-                            "instance": "^term|xvt$",
-                            "title": "cava"
+                            "instance": "visualizer",
+                            "title": "vis"
                         }
                     ]
                 },
                 {
                     "name": "music",
-                    "percent": 0.352380952,
+                    // 18.452381% of the whole screen
+                    "percent": 0.36904762,
                     "border": "none",
                     "type": "con",
                     "swallows": [
                         {
-                            "class": "^chromium$",
-                            "instance": "^crx_fahmaaghhglfmonjliepjlchgpgfmobi$",
-                            "window_role": "app"
+                            "class": "Google Play Music Desktop Player",
+                            "instance": "google play music desktop player",
+                            "window_role": "browser-window"
                         }
                     ]
                 }
