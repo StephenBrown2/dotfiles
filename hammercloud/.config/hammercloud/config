@@ -25,3 +25,4 @@ consolebrowser=firefox
 tmux_layout=tiled
 # An intenger specifying the maximum number of panes to generate per window when using one of the above layouts
 tmux_max_panes=9
+consolebrowser=firefox
