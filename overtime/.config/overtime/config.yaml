@@ -5,7 +5,6 @@ misc:
   show_passwords: yes
   expect_timeout: 60
   ssh_args: -F /home/stephen/.ssh/config
-  javawspath: ~/tools/java/bin
   verify_ssl: False
   keyringenv: hypervisor
   use_keyring: True
