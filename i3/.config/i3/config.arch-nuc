@@ -45,14 +45,14 @@ set $up_key l
 set $right_key semicolon
 
 # Colors
-set $background #010203
-set $foreground #96100F
-set $gray #889791
+set $background #10141A
+set $foreground #740000
+set $gray #2E3238
 set $primary #C40022
-set $secondary #DA0004
-set $tertiary #9E000C
-set $warning #CC0000
-set $separator #CFCAC6
+set $secondary #B0000E
+set $tertiary #9C0000
+set $warning #F6B100
+set $separator #6A6E74
 
 # Display configuration
 # - i3wm
@@ -81,11 +81,11 @@ for_window [class="chromium" title="Google Play Music" instance="crx_fahmaaghhgl
 font pango:Hack 10
 
 # Window colors
-#                       border   background text        indicator
-client.focused          $primary $primary   $background $primary
-client.focused_inactive $primary $primary   $background $primary
-client.unfocused        $gray    $gray      $foreground $secondary
-client.urgent           $warning $warning   $foreground $warning
+#                       border     background text        indicator
+client.focused          $primary   $primary   $background #00B4C3
+client.focused_inactive $secondary $secondary $gray       $separator
+client.unfocused        $gray      $gray      $primary    $secondary
+client.urgent           $warning   $warning   $foreground $primary
 
 ### Key bindings
 #
@@ -234,10 +234,10 @@ bar {
     workspace_buttons yes
     strip_workspace_numbers yes
 
-    status_command i3blocks -c ~/.config/i3blocks/config
     tray_output $primary_monitor
+    status_command i3blocks -c /home/stephen/.config/i3blocks/config.arch-nuc
 
-    font pango:Ubuntu Mono 10
+    font pango:FontAwesome, Ubuntu Mono 10
     colors {
         background $background
         statusline $primary
