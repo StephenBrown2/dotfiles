@@ -20,7 +20,7 @@ MAX_SECONDS_TO_SHOW_DELTA = 600
 HISTORY_LENGTH = 2
 MAX_BAD_REQUEST_ATTEMPTS = 3
 REQUEST_TIMEOUT_SECONDS = 2
-LONG_OUTPUT=1
+LONG_OUTPUT=0
 
 ################################################################################
 # Display options
