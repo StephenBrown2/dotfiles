@@ -57,13 +57,12 @@ log 'getting intensive password';
 #python -c "import keyring;print keyring.set_password('racker', 'intensive_password', '$(intensify --sso step7212)')" >/dev/null
 #echo $(python -c "import keyring;print keyring.get_password('racker', 'intensive_password')")
 #log 'setting up ssh proxy';
-#ssh -fnND 4444 bastion &
-log 'setting up bastion proxy';
-for dc in dfw hkg iad lon3 lon5 ord syd; do
+log 'setting up dfw bastion proxy';
+for dc in dfw; do
     echo "Authing to $dc firewall...";
-    authnet.sh -d $dc -l -u step7212 -v \
-    && sleep 60 || echo "Whoops, try $dc again later";
+    authnet.sh -d $dc -l -u step7212 -v && sleep 5 || echo "Whoops, try $dc again later";
 done
+urxvt +sb -depth 32 -foreground '#B0B0B0' -background rgba:2000/2000/2000/aaaa -fn 'xft:DejaVu Sans Mono:pixelsize=10' -name bastion -e ssh bastion &
 
 sleep 5;
 #log 'checking mountpoint';
@@ -103,7 +102,7 @@ log 'Smartsheet Chromium App'
 log 'Google Play Music'
 #/usr/bin/chromium --profile-directory=Default --app-id=fahmaaghhglfmonjliepjlchgpgfmobi &
 # cd /home/stephen/src/Google-Play-Music-Desktop-Player-UNOFFICIAL- && git pull && rm -rf node_modules && npm install && npm run build && npm start &
-google-play-music-desktop-player &
+gpmdp &
 
 log 'Terminal audio visualizer'
 #termite -e cava -t cava -c ~/.config/termite/config.cava --geometry=540x296 &
@@ -117,10 +116,17 @@ subl3 2>/dev/null &
 #sleep 5;
 #log 'starting away-on-lock script'
 #/home/stephen/src/aol.py &
+log 'setting up the other bastion proxies';
+for dc in hkg iad lon3 lon5 ord syd; do
+    echo "Authing to $dc firewall...";
+    authnet.sh -d $dc -l -u step7212 -v \
+    && sleep 60 || echo "Whoops, try $dc again later";
+done
 sleep 120;
-# Retile windows, just in case
-devilspie -a &
-# Kill dat proc
-[ $(pgrep devilspie | wc -l) -gt 1 ] && kill $(pgrep devilspie | tail -1)
-
+if [[ $DESKTOP_SESSION == 'cinnamon' ]]; then
+    # Retile windows, just in case
+    devilspie -a &
+    # Kill dat proc
+    [ $(pgrep devilspie | wc -l) -gt 1 ] && kill $(pgrep devilspie | tail -1)
+fi
 log 'done!'
