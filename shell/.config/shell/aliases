@@ -89,6 +89,6 @@ function docker-ip() {                                                          
 }
 
 function new-etherpad() {
-  ethersync --host='https://etherpad.rax.io' -p $1 -f <( sed "s/TICKETNUMBER/$1/" /home/stephen/src/ER-Maint_linuxscripts/etherpad-template) &
+  ethersync --host='https://etherpad.rax.io' -p $1 -f <( sed "s/TICKETNUMBER/$1/" /home/stephen/git/rack/ER-Maint_linuxscripts/etherpad-template) &
   export ETHERPID=$! && sleep 5 && kill -s SIGINT $ETHERPID
 }
