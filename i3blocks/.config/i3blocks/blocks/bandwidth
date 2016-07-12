@@ -4,7 +4,7 @@
 INSTANCE="${BLOCK_INSTANCE}"
 
 if [[ "${INSTANCE}" = "" ]]; then
-  INSTANCE="eno1;both"
+  INSTANCE="en;both"
 fi
 
 SHOW=$(echo "${INSTANCE}" | awk -F ';' '{print $2}')
@@ -27,7 +27,7 @@ PREV_OUT=0
 PREV_FILE="/tmp/.bandwidth"
 
 if [[ -f "${PREV_FILE}" ]]; then
-  PREV_CONT=$(cat "${PREV_FILE}")
+  PREV_CONT=$(tail -n 2 "${PREV_FILE}")
   PREV_IN=$(echo "${PREV_CONT}" | head -n 1)
   PREV_OUT=$(echo "${PREV_CONT}" | tail -n 1)
 fi
