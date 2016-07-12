@@ -5,3 +5,5 @@ rack/.config/rack/config
 sway/.config/sway/config
 vim/.config/vim/.netrwhist
 .zcompdump*
+sublime-text-3/*
+!sublime-text-3/**/*.sublime-settings

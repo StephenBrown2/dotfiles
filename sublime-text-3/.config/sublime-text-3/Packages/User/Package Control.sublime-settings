@@ -27,6 +27,7 @@
 		"SublimeLinter-csslint",
 		"SublimeLinter-html-tidy",
 		"SublimeLinter-json",
-		"Tag"
+		"Tag",
+		"Theme - Monokai"
 	]
 }
