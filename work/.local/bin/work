@@ -54,6 +54,7 @@ echo
 log 'Is the internet on fire?';
 dig +short txt istheinternetonfire.com
 log 'getting intensive password';
+intensify --sso step7212
 #python -c "import keyring;print keyring.set_password('racker', 'intensive_password', '$(intensify --sso step7212)')" >/dev/null
 #echo $(python -c "import keyring;print keyring.get_password('racker', 'intensive_password')")
 #log 'setting up ssh proxy';
@@ -62,7 +63,8 @@ for dc in dfw; do
     echo "Authing to $dc firewall...";
     authnet.sh -d $dc -l -u step7212 -v && sleep 5 || echo "Whoops, try $dc again later";
 done
-urxvt +sb -depth 32 -foreground '#B0B0B0' -background rgba:2000/2000/2000/aaaa -fn 'xft:DejaVu Sans Mono:pixelsize=10' -name bastion -e ssh bastion &
+#pgrep bastion || urxvt +sb -depth 32 -foreground '#B0B0B0' -background rgba:2000/2000/2000/aaaa -fn 'xft:DejaVu Sans Mono:pixelsize=10' -name bastion -e ssh bastion &
+ps fawux | grep '[b]astion' || urxvt +sb -depth 32 -foreground '#B0B0B0' -background rgba:2000/2000/2000/aaaa -name bastion -e ssh bastion &
 
 sleep 5;
 #log 'checking mountpoint';
@@ -73,46 +75,47 @@ sleep 5;
 #/home/stephen/.local/bin/autokey-gtk 2>/dev/null &
 sleep 5;
 log 'starting Shutter';
-shutter --min_at_startup 2>/dev/null &
+pgrep shutter || shutter --min_at_startup 2>/dev/null &
 sleep 5;
 log 'starting Pidgin';
-pidgin &
+pgrep pidgin || pidgin &
 sleep 5;
 log 'starting Slack';
-slack &
+pgrep slack || slack &
 sleep 5;
 log 'starting go-nucleus-agent';
-cd ~/gocode
-export GOPATH=`pwd`
-go get github.com/boltdb/bolt/
-cd src/go-nucleus-agent
-git pull
-go run ${GOPATH}/src/go-nucleus-agent/go-nucleus-agent.go -profile `ls -d ~/.mozilla/firefox/*.default` -terminal-path=terminator  -terminal-args=-x >/var/log/fission.log &
+if [[ ! $(pgrep go-nucleus) ]]; then
+  cd ~/gocode
+  export GOPATH=`pwd`
+  go get github.com/boltdb/bolt/
+  cd src/go-nucleus-agent
+  git pull
+  go run ${GOPATH}/src/go-nucleus-agent/go-nucleus-agent.go -profile `ls -d ~/.mozilla/firefox/*.default` -terminal-path=terminator  -terminal-args=-x >/var/log/fission.log &
+fi
 log 'starting Firefox';
-firefox 1>&2 2>/dev/null &
-#/home/stephen/ff-35.0.1/firefox 2>/dev/null &
+pgrep firefox || firefox 1>&2 2>/dev/null &
 sleep 5;
 log 'starting Chromium';
 #google-chrome-unstable --proxy-server="socks://localhost:4444" 2>/dev/null &
-chromium --proxy-pac-url="http://cbast.dfw1.rackspace.com/dfw1pac.js" 2>/dev/null &
-sleep 5;
-log 'Smartsheet Chromium App'
-/usr/bin/chromium --profile-directory=Default --app-id=alehdleagcgnimdipdmllebddejplpbi &
+pgrep chromium || chromium 2>/dev/null &
+#sleep 5;
+#log 'Smartsheet Chromium App'
+#/usr/bin/chromium --profile-directory=Default --app-id=alehdleagcgnimdipdmllebddejplpbi &
 
 log 'Google Play Music'
 #/usr/bin/chromium --profile-directory=Default --app-id=fahmaaghhglfmonjliepjlchgpgfmobi &
 # cd /home/stephen/src/Google-Play-Music-Desktop-Player-UNOFFICIAL- && git pull && rm -rf node_modules && npm install && npm run build && npm start &
-gpmdp &
+pgrep Google || gpmdp &
 
 log 'Terminal audio visualizer'
 #termite -e cava -t cava -c ~/.config/termite/config.cava --geometry=540x296 &
-urxvt +sb -depth 32 -foreground '#B0B0B0' -background rgba:2000/2000/2000/aaaa -fn 'xft:DejaVu Sans Mono:pixelsize=2' -geometry 179x98 -name visualizer -e vis &
+pgrep vis || urxvt +sb -depth 32 -foreground '#B0B0B0' -background rgba:2000/2000/2000/aaaa -fn 'xft:DejaVu Sans Mono:pixelsize=2' -geometry 179x98 -name visualizer -e vis &
 
 log 'Google Hangouts Chromium App'
 /usr/bin/chromium --profile-directory=Default --app-id=knipolnnllmklapflnccelgolnpehhpl &
 sleep 5
 log 'starting Sublime';
-subl3 2>/dev/null &
+pgrep subl3 || subl3 2>/dev/null &
 #sleep 5;
 #log 'starting away-on-lock script'
 #/home/stephen/src/aol.py &
