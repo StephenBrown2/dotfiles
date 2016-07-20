@@ -1,0 +1,31 @@
+[hammercloud]
+sso=step7212
+#ssh_key=<required for rcv3>
+# Useful options include -X for x11 forwarding and -F /path/to/conf for special configs
+#ssh_args=<optional>
+# disables verifying ssl for requests (currently True does not work)
+verify_ssl=False
+# environment in supernova-keyring where your RackSSOPassword is (default: hypervisor)
+keyringenv=hypervisor
+# whether or not to use the keyring (default: True)
+use_keyring=True
+# Whether or not to use backstage to get the huddle and hypervisor info (default: True)
+use_backstage=False
+# User for firstgen bastions
+#firstgen=<user>
+# Optional if you have your .ssh/config for *slicehost.net
+#firstgenkey=<path to keyfile>
+# terminal for opening multiple servers with
+terminal=tmux
+#Devops ssh key for sshing into customer boxes
+#devops_key=/path/to/key
+#Browser to launch html5 console with
+consolebrowser=firefox
+# Enable using stoken library if the module exists
+use_stoken=True
+
+[terminal]
+# An intenger specifying the maximum number of panes to generate per window when using one of the above layouts
+tmux_max_panes=9
+# Can be one of 'even-horizontal', 'even-vertical', 'main-horizontal', 'main-vertical', 'tiled'
+tmux_layout=tiled

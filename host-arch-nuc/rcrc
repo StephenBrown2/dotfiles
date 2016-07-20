@@ -1,0 +1,4 @@
+TAGS="work bin gtk git pics nvim python shell remind sublime termite tmux yubikey zsh i3lock"
+DOTFILES_DIRS="/home/stephen/rcfiles"
+EXCLUDES="README*"
+COPY_ALWAYS="*config/systemd*"

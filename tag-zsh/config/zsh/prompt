@@ -1,0 +1,12 @@
+# ~/.zsh_prompt
+
+export PROMPT='%B%{$fg[blue]%}[%{$fg[green]%}%n%{$fg[cyan]%}@%{$fg[green]%}%m%{$fg[blue]%}]%b%{${reset_color}%} %# '
+
+if [[ -f ~/.local/bin/git-rprompt.sh ]]; then
+  source ~/.local/bin/git-rprompt.sh
+  precmd() { __git_ps1 " %B%{$fg[yellow]%}$(fish_dir -l)%b%{${reset_color}%}" " %{$fg[red]%}[%{$fg[cyan]%}%D{%a %b %d %T}%{$fg[red]%}]%{${reset_color}%}" " (%s)" }
+else if type git_super_status &> /dev/null; then
+  export RPROMPT=' %B%{$fg[yellow]%}$(fish_dir -l)%b%{${reset_color}%} $(git_super_status) %{$fg[red]%}[%{$fg[cyan]%}%D{%a %b %d %T}%{$fg[red]%}]%{${reset_color}%}'
+else
+  export RPROMPT=' %B%{$fg[yellow]%}$(fish_dir -l)%b%{${reset_color}%} %{$fg[red]%}[%{$fg[cyan]%}%D{%a %b %d %T}%{$fg[red]%}]%{${reset_color}%}'
+fi

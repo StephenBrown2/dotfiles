@@ -1,0 +1,3 @@
+# Compositing with compton
+# - i3wm
+exec --no-startup-id compton --config ~/.config/compton/config -b

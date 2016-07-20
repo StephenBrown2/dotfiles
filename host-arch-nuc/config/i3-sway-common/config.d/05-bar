@@ -1,0 +1,60 @@
+bar {
+    output $left_monitor
+    position top
+    mode dock
+    workspace_buttons yes
+    strip_workspace_numbers yes
+    font pango:Hack 10
+    colors {
+        background $background
+        statusline $primary
+        separator $separator
+        #                  border      background         text
+        focused_workspace  $secondary  $background $foreground
+        active_workspace   $primary    $background $foreground
+        inactive_workspace $primary    $background $foreground
+        urgent_workspace   $foreground $warning    $background
+    }
+}
+
+bar {
+    output $primary_monitor
+    position top
+    mode dock
+    workspace_buttons yes
+    strip_workspace_numbers yes
+
+    tray_output $primary_monitor
+    status_command i3blocks -c /home/stephen/.config/i3blocks/config.arch-nuc
+
+    font pango:FontAwesome, Ubuntu Mono 10
+    colors {
+        background $background
+        statusline $primary
+        separator $separator
+        #                  border      background         text
+        focused_workspace  $secondary  $background $foreground
+        active_workspace   $primary    $background $foreground
+        inactive_workspace $primary    $background $foreground
+        urgent_workspace   $foreground $warning    $background
+    }
+}
+
+bar {
+    output $right_monitor
+    position top
+    mode dock
+    workspace_buttons yes
+    strip_workspace_numbers yes
+    font pango:Hack 10
+    colors {
+        background $background
+        statusline $primary
+        separator $separator
+        #                  border      background         text
+        focused_workspace  $secondary  $background $foreground
+        active_workspace   $primary    $background $foreground
+        inactive_workspace $primary    $background $foreground
+        urgent_workspace   $foreground $warning    $background
+    }
+}

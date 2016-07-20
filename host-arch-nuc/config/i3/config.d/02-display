@@ -1,0 +1,3 @@
+# Display configuration
+# - i3wm
+exec --no-startup-id xrandr --output $left_monitor --mode 1680x1050 --pos 0x0 --rotate normal --output $primary_monitor --primary --mode 1680x1050 --pos 1680x0 --rotate normal --output $right_monitor --mode 1680x1050 --pos 3360x0 --rotate normal

@@ -1,0 +1,2 @@
+# Window handling
+for_window [window_role="popup"] floating enable

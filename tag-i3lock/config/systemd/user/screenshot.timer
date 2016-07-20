@@ -1,0 +1,8 @@
+[Unit]
+Description=Timer to run screenshot every minute
+
+[Timer]
+OnCalendar=minutely
+
+[Install]
+WantedBy=timers.target

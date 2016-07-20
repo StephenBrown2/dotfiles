@@ -1,0 +1,9 @@
+hammercloud:
+    user: step7212
+    plugin: rackspace
+    # ssh_args: -F ~/.ssh/extraconf
+    bastion_key: ~/.ssh/rsbastion.key
+    bastion: dfw
+    terminal: tmux
+    use_supernova: False
+    shelltype: expect
