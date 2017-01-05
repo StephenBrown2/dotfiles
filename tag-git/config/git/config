@@ -4,6 +4,8 @@
 
 [core]
   editor = /usr/bin/vim
+  autocrlf = input
+
 [help]
   autocorrect = 10
 
@@ -70,6 +72,12 @@
   la = !git l --all
   lg = !git l --graph
   lgh = "!git l --graph | head"
+
+  # rack alias for internal github
+  rack = !GITHUB_HOST=github.rackspace.com hub
+
+[hub]
+  host = github.rackspace.com
 
 [merge]
   tool = meld

@@ -3,5 +3,5 @@
         (is (window_class) 'chromium')
         (matches (window_name) '^Hangouts')
     )
-    (geometry "840x365+3360+680")
+    (geometry "840x354+4200+384")
 )

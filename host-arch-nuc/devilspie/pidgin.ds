@@ -4,7 +4,7 @@
         (is (window_role) 'buddy_list')
     )
     (begin
-        (geometry "840x717+4200+0")
+        (geometry "840x360+4200+0")
         (above)
     )
 )

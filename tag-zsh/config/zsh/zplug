@@ -11,7 +11,7 @@ else
     # zplug "olivierverdier/zsh-git-prompt",   from:github
     zplug "arzzen/calc.plugin.zsh",            from:github
     zplug "djui/alias-tips",                   from:github
-    zplug "hlissner/zsh-autopair",             from:github, nice:10
+    # zplug "hlissner/zsh-autopair",             from:github, defer:2
     zplug "plugins/archlinux",                 from:oh-my-zsh
     zplug "plugins/colored-man-pages",         from:oh-my-zsh
     zplug "plugins/command-not-found",         from:oh-my-zsh
@@ -38,7 +38,7 @@ else
     zplug "rimraf/k",                          from:github
     zplug "unixorn/git-extra-commands",        from:github
     zplug "zsh-users/zsh-completions",         from:github
-    zplug "zsh-users/zsh-syntax-highlighting", from:github, nice:10
+    zplug "zsh-users/zsh-syntax-highlighting", from:github, defer:3
 
     # Install plugins if there are plugins that have not been installed
     if ! zplug check --verbose; then
@@ -49,5 +49,6 @@ else
     fi
 
     # Then, source plugins and add commands to $PATH
-    zplug load --verbose
+    #zplug load --verbose
+    zplug load
 fi

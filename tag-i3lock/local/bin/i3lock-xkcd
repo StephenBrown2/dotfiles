@@ -11,56 +11,14 @@ purple-remote "setstatus?status=away&message=AFK"
 
 # Pause the music
 vol=$((parec --device=$(pacmd list-sinks | awk '/*/{print $NF}') --latency=2 --channels=1 | od -N2 -td2 | head -n1 | cut -d' ' -f2- | tr -d ' ' | perl -pe 's/^-//') 2>/dev/null)
-if [ $vol -gt 0 ]; then
-    echo $vol
-    xdotool key XF86AudioPlay
+if [ $vol -gt 0 ] && [[ $(jshon -F ~/.config/'Google Play Music Desktop Player'/json_store/playback.json -e playing) == 'true' ]]; then
+    # echo $vol
+    # xdotool key XF86AudioPlay
+    dbus-send --print-reply --reply-timeout=1000 --dest=org.mpris.MediaPlayer2.google-play-music-desktop-player /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause 2>/dev/null
 fi
-
-if [[ ! -f /tmp/screen.png ]]; then
-  # Take a screenshot
-  # Handled by screenshot.service
-  maim /tmp/screen.png
-
-  # How blurry should we make it?
-  # (Smaller pixscale=bigger pixels)
-  # Handled by screenshot.service
-  pixscale=$(( ( RANDOM % 15 ) + 1))
-  rescale=${$((1./${pixscale}*10000))%%.*}
-
-  # Pixelate! (Takes a couple seconds, trimmed using thumbnail first)
-  convert /tmp/screen.png -thumbnail ${pixscale}% -scale ${rescale}% /tmp/screen.png
-fi
-
-# Figure out the dimensions of the screen
-screenwidth=$(identify -format "%W" /tmp/screen.png)
-screenheight=$(identify -format "%H" /tmp/screen.png)
-
-# Make sure the comic fits inside it well
-maxheight=${$((${screenheight}*.98))%%.*}
-
-# Now we get our comic and alt text
-eval $(~/.local/bin/random-xkcd)
-
-# and the width of that image, for the alt text
-width=$(identify -format "%W" $filename)
-
-# What font should imagemagick use?
-#fontname=Humor-Sans
-fontname=xkcd-Regular
-
-# Set up the xkcd alt text and append to the comic image
-captionoptions=(-background white -fill black -gravity center -font ${fontname} -pointsize 14 -size ${width})
-convert "${captionoptions[@]}" caption:"Comic #${number}: ${title}" -append ${filename} "${captionoptions[@]}" caption:"${alttext}" -bordercolor white -border 5 -bordercolor black -border 1 -append -resize "x${maxheight}>" /tmp/xkcd-alt.png
-
-# Stick the comic smack dab in the middle of the pixelated background
-convert -gravity center -composite /tmp/screen.png /tmp/xkcd-alt.png /tmp/xcreen.png
-
-# Log the time taken
-END="$(date +%s%N)"
-echo "time=$(echo "$END - $START" | bc), pixscale=$pixscale" >> /var/log/i3l.log
 
 # Finally, lock the screen!
-i3lock -efi /tmp/xcreen.png
+i3lock -efi /tmp/xcreen.png -c 000000
 
 # Clean up after ourselves
 for file in xcreen.png xkcd.png xkcd-alt.png; do

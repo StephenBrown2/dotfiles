@@ -77,7 +77,7 @@ function swap() {
     mv -f $temp $second;
 }
 
-function docker-ip() {                                                                                                           /h/s/sr/minority-report (master #%) [Mon May 23 08:34:33]
+function docker-ip() {
   sudo docker inspect --format '{{ .NetworkSettings.IPAddress }}' "$@"
 }
 

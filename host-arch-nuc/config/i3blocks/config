@@ -37,11 +37,11 @@ label=
 instance=t-A-p
 interval=1
 
-[nightscout]
-label=💧
-interval=300
+#[nightscout]
+#label=💧
+#interval=300
 #[workspaces]
-#instance=default
+#instance=HDMI1 HDMI2 HDMI3
 #interval=1
 #markup=pango
 
@@ -67,11 +67,11 @@ interval=300
 #interval=1
 #min_width=38
 
-[network_lan]
-name=network
-label=
-instance=eno1
-interval=10
+#[network_lan]
+#name=network
+#label=
+#instance=eno1
+#interval=10
 
 #[network_wan]
 #name=network
@@ -83,9 +83,9 @@ interval=10
 #label=
 #interval=5
 
-[firewall]
-label=
-interval=10
+#[firewall]
+#label=
+#interval=10
 
 [load]
 label=
@@ -95,14 +95,14 @@ interval=10
 label=
 interval=10
 
-[bluetooth]
-label=
-interval=10
+#[bluetooth]
+#label=
+#interval=10
 
-[batticons]
-label=
-instance=0
-interval=5
+#[batticons]
+#label=
+#instance=0
+#interval=5
 
 #[brightness]
 #label=
@@ -173,9 +173,9 @@ interval=300
 #label=
 #interval=5
 
-[weather]
-instance=4726206
-interval=300
+#[weather]
+#instance=4726206
+#interval=300
 
 [trash]
 label=
