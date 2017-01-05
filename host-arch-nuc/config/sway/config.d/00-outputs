@@ -1,0 +1,5 @@
+# Outputs
+# - sway
+set $left_monitor    HDMI-A-1
+set $primary_monitor HDMI-A-2
+set $right_monitor   HDMI-A-3

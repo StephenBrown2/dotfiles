@@ -1,0 +1,5 @@
+# Outputs
+# - i3wm
+set $left_monitor    HDMI1
+set $primary_monitor HDMI2
+set $right_monitor   HDMI3

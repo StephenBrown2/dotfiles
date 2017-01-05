@@ -1,0 +1,6 @@
+# Window colors
+#                       border     background text        indicator
+client.focused          $primary   $primary   $background #00B4C3
+client.focused_inactive $secondary $secondary $gray       $separator
+client.unfocused        $gray      $gray      $primary    $secondary
+client.urgent           $warning   $warning   $foreground $primary

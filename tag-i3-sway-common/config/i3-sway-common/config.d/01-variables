@@ -1,0 +1,37 @@
+# Workspaces
+set $ws1 1:
+set $ws2 2:
+set $ws3 3:
+set $ws4 4:%_
+set $ws5 5:
+set $ws6 6
+set $ws7 7
+set $ws8 8
+set $ws9 9
+set $ws10 10
+
+# Super key. Use Mod1 for Alt.
+set $mod Mod4
+set $alt Mod1
+
+# Your preferred terminal emulator
+set $term terminator
+
+# Your preferred application launcher
+set $menu j4-dmenu-desktop --dmenu='rofi -dmenu -i -no-levenshtein-sort'
+
+# Movement keys
+set $left_key j
+set $down_key k
+set $up_key l
+set $right_key semicolon
+
+# Colors
+set $background #10141A
+set $foreground #740000
+set $gray #2E3238
+set $primary #C40022
+set $secondary #B0000E
+set $tertiary #9C0000
+set $warning #F6B100
+set $separator #6A6E74

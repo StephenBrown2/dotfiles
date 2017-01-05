@@ -1,0 +1,10 @@
+(if
+    (and
+        (is (window_class) 'Pidgin')
+        (is (window_role) 'buddy_list')
+    )
+    (begin
+        (geometry "840x360+4200+0")
+        (above)
+    )
+)

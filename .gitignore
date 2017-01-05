@@ -1,9 +1,4 @@
-i3blocks/.config/i3blocks/config
-i3/.config/i3/config
-rack/.config/rack/cache
-rack/.config/rack/config
-sway/.config/sway/config
-vim/.config/vim/.netrwhist
+.netrwhist
 .zcompdump*
 sublime-text-3/*
 !sublime-text-3/**/*.sublime-settings

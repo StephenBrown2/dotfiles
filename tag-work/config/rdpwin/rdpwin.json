@@ -1,0 +1,16 @@
+{
+    "authnet_bin": "$(which authnet.sh 2>/dev/null)",
+    "debug": false,
+    "intensify_bin": "$(which intensify 2>/dev/null)",
+    "intensify_opts": "--sso step7212",
+    "isoshare": "${HOME}/iso",
+    "rax_default_dc": "dfw1",
+    "rax_default_region": "dfw",
+    "rax_int_sso": "step17212",
+    "rax_ssh_args": "",
+    "rax_sso": "step7212",
+    "raxcfg_keyring": "raxcfg",
+    "rdpopts": "/cert-ignore +clipboard",
+    "rdpsize": "1280x960",
+    "use_intensify": true
+}

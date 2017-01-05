@@ -1,1 +1,0 @@
-echo "Logging out!"

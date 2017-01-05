@@ -1,3 +1,0 @@
-[submodule "zgen"]
-	path = zgen/.config/zgen
-	url = https://github.com/tarjoilija/zgen

@@ -1,0 +1,3 @@
+# Wallpaper
+# - i3wm
+exec --no-startup-id feh --bg-fill ~/wallpapers/Red-Tesla-Emblem-Logo-Water.jpg

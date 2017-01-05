@@ -1,0 +1,8 @@
+[Unit]
+Description=Update screenshot every minute
+
+[Service]
+ExecStart=/home/stephen/.local/bin/screenshot.sh
+
+[Install]
+WantedBy=default.target

@@ -1,7 +1,0 @@
-(if
-    (and
-        (is (window_class) 'Slack')
-        (matches (window_name) '^Slack')
-    )
-    (geometry "840x717+3360+0")
-)

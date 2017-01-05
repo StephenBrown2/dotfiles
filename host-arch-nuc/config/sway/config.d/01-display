@@ -1,0 +1,5 @@
+# Display configuration
+# - sway
+output $left_monitor resolution 1680x1050 position 0,0
+output $primary_monitor resolution 1680x1050 position 1680,0
+output $right_monitor resolution 1680x1050 position 3360,0

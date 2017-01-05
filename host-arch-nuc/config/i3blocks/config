@@ -1,0 +1,257 @@
+# i3blocks config file
+# Largely taken from/inspired by https://github.com/Anachron/i3blocks
+#
+# Please see man i3blocks for a complete reference!
+# The man page is also hosted at http://vivien.github.io/i3blocks
+#
+# List of valid properties:
+#
+# align
+# color
+# command
+# full_text
+# instance
+# interval
+# label
+# min_width
+# name
+# separator
+# separator_block_width
+# short_text
+# signal
+# urgent
+
+# Global properties
+#
+# The top properties below are applied to every block, but can be overridden.
+# Each block command defaults to the script name to avoid boilerplate.
+#command=/usr/lib/i3blocks/$BLOCK_NAME
+command=$HOME/.config/i3blocks/blocks/$BLOCK_NAME
+separator_block_width=10
+#markup=none
+
+# Blocks
+
+[gpmdp]
+label=
+instance=t-A-p
+interval=1
+
+#[nightscout]
+#label=💧
+#interval=300
+#[workspaces]
+#instance=HDMI1 HDMI2 HDMI3
+#interval=1
+#markup=pango
+
+#[icanhazip]
+#label=
+#interval=once
+
+#[icanhazlocalip]
+#label=
+#interval=once
+
+#[bandwidth_down]
+#name=bandwidth
+#instance=eno1;in
+#label=
+#interval=1
+#min_width=38
+
+#[bandwidth_up]
+#name=bandwidth
+#instance=eno1;out
+#label=
+#interval=1
+#min_width=38
+
+#[network_lan]
+#name=network
+#label=
+#instance=eno1
+#interval=10
+
+#[network_wan]
+#name=network
+#label=
+#instance=wlp3s0
+#interval=10
+
+#[ssid]
+#label=
+#interval=5
+
+#[firewall]
+#label=
+#interval=10
+
+[load]
+label=
+interval=10
+
+[temperature]
+label=
+interval=10
+
+#[bluetooth]
+#label=
+#interval=10
+
+#[batticons]
+#label=
+#instance=0
+#interval=5
+
+#[brightness]
+#label=
+#interval=5
+
+[audio]
+label=
+interval=5
+
+[microphone]
+label=
+interval=5
+
+[webcam]
+label=
+interval=5
+
+[keystate_caps]
+name=keystate
+label=
+instance=caps
+interval=1
+
+[keystate_num]
+name=keystate
+label=
+instance=num
+interval=1
+
+[memory_mem]
+name=memory
+label=
+instance=mem;available
+interval=30
+
+[memory_swap]
+name=memory
+label=
+instance=swap;total
+interval=30
+
+[space]
+label=
+instance=/;free
+interval=30
+
+[space]
+label=
+interval=30
+
+[cpu]
+label=
+interval=2
+
+[packages]
+label=
+interval=300
+
+#[user]
+#label=
+#interval=once
+
+#[locale]
+#label=
+#interval=once
+
+#[display]
+#label=
+#interval=5
+
+#[weather]
+#instance=4726206
+#interval=300
+
+[trash]
+label=
+interval=10
+
+[kernel]
+label=
+interval=once
+
+[datetime]
+label=
+interval=5
+
+###################
+##
+# Standard i3blocks
+##
+#[volume]
+##label=VOL
+#label=♪
+#instance=Master
+##instance=PCM
+#command=/usr/share/i3blocks/volume 5% pulse
+#interval=once
+#signal=10
+
+#[memory]
+#label=MEM
+#command=/usr/share/i3blocks/memory
+#separator=false
+#interval=30
+
+#[swap]
+#label=SWAP
+#instance=swap
+#command=/usr/share/i3blocks/memory
+#interval=30
+
+#[disk-home]
+#instance=$HOME
+#command=/usr/share/i3blocks/disk
+#interval=30
+
+#[wireless]
+#label=W
+##instance=wlan0
+#instance=wlp3s0
+#command=/usr/share/i3blocks/network
+#color=#00FF00
+#interval=10
+
+#[ethernet]
+#label=E
+##instance=eth0
+#instance=enp0s25
+#command=/usr/share/i3blocks/network
+#color=#00FF00
+#interval=10
+
+#[cpu]
+#label=CPU
+#command=/usr/share/i3blocks/cpu_usage
+#interval=10
+#min_width=CPU: 100.00%
+#separator=false
+
+#[load]
+#command=/usr/share/i3blocks/load_average
+#interval=10
+
+#[battery]
+#label=BAT
+#label=⚡
+#command=/usr/share/i3blocks/battery
+#interval=30
+
+#[time]
+#command=date '+%Y-%m-%d %H:%M:%S'
+#interval=5
