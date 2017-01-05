@@ -1,4 +1,3 @@
 TAGS="bash bin git gtk i3lock pics python remind shell sublime termite tmux vim work yubikey zsh"
-DOTFILES_DIRS="/home/stephen/rcfiles"
 EXCLUDES="README*"
 COPY_ALWAYS="*config/systemd*"

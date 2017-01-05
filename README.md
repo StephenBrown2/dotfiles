@@ -6,14 +6,14 @@ A collection of the .files I use for configuring my session (Usually terminal st
 Installation
 ------------
 
-Since I'm using [GNU Stow](https://www.gnu.org/software/stow/) now, the instructions are pretty basic.
+Since I'm using [rcm](https://github.com/thoughtbot/rcm) now, the instructions are pretty basic.
 
-Any time I have to use a new linux box, all I have to do is install git and stow, and then:
+Any time I have to use a new linux box, all I have to do is:
 
 ```shell
-git clone --recursive https://github.com/StephenBrown2/dotfiles.git ~/.dotfiles
-cd ~/.dotfiles
-./create-links home/work
+$ pacman -S git rcm  # Or whichever method is needed to install them
+$ git clone https://github.com/StephenBrown2/dotfiles.git ~/.dotfiles
+$ rcup
 ```
 
-and I have a set up identical to all my other systems.
+and I have a set up identical to all my other systems, with host-specifc config set from the `host-` prefixed dirs.
