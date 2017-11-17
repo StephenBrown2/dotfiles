@@ -1,0 +1,12 @@
+; generated_rule 2-0-googlechrome
+( if 
+( begin 
+( is ( window_role ) "browser" )
+( contains ( window_class ) "google-chrome" )
+( contains ( window_name ) "Google Chrome" )
+) 
+( begin 
+( maximize )
+( println "match" )
+)
+)

@@ -1,0 +1,12 @@
+; generated_rule 1-0-firefox
+( if 
+( begin 
+( is ( window_role ) "browser" )
+( contains ( window_class ) "Firefox" )
+( contains ( window_name ) "Mozilla Firefox" )
+) 
+( begin 
+( maximize )
+( println "match" )
+)
+)

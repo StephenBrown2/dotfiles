@@ -1,7 +1,0 @@
-(if
-    (and
-        (is (window_class) 'chromium')
-        (matches (window_name) '^Hangouts')
-    )
-    (geometry "840x354+4200+384")
-)

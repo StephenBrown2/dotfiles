@@ -1,0 +1,11 @@
+; generated_rule 3-2-gtop
+( if 
+( begin 
+( contains ( window_class ) "gtop" )
+( is ( window_name ) "gtop" )
+) 
+( begin 
+( geometry "565x913+4480+0" )
+( println "match" )
+)
+)
