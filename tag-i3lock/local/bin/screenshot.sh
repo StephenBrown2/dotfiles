@@ -10,7 +10,8 @@ screenwidth=$(identify -format "%W" /tmp/clearscreen.png)
 screenheight=$(identify -format "%H" /tmp/clearscreen.png)
 # How blurry should we make it?
 # (Smaller pixscale=bigger pixels)
-pixscale=$(( ( RANDOM % 15 ) + 1));
+pixscale=$(( ( RANDOM % 10 ) + 1));
+echo "$(date) ${pixscale}" >> /var/log/xkcd-lock
 rescale=${$((1./${pixscale}*10000))%%.*};
 # Blurrify the screenshot and clean up
 convert /tmp/clearscreen.png -thumbnail ${pixscale}% -scale ${rescale}% /tmp/screen.png;

@@ -6,24 +6,10 @@ env | grep XAUTHORITY
 # Start counting time here
 START="$(date +%s%N)"
 
-# Set Pidgin status
-purple-remote "setstatus?status=away&message=AFK"
-
-# Pause the music
-vol=$((parec --device=$(pacmd list-sinks | awk '/*/{print $NF}') --latency=2 --channels=1 | od -N2 -td2 | head -n1 | cut -d' ' -f2- | tr -d ' ' | perl -pe 's/^-//') 2>/dev/null)
-if [ $vol -gt 0 ] && [[ $(jshon -F ~/.config/'Google Play Music Desktop Player'/json_store/playback.json -e playing) == 'true' ]]; then
-    # echo $vol
-    # xdotool key XF86AudioPlay
-    dbus-send --print-reply --reply-timeout=1000 --dest=org.mpris.MediaPlayer2.google-play-music-desktop-player /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause 2>/dev/null
-fi
-
 # Finally, lock the screen!
-i3lock -efi /tmp/xcreen.png -c 000000
+i3lock-spy -i /tmp/xcreen.png -c 000000
 
 # Clean up after ourselves
 for file in xcreen.png xkcd.png xkcd-alt.png; do
   [[ -f /tmp/$file ]] && rm /tmp/$file
 done
-
-# I'm back!
-purple-remote "setstatus?status=available&message="
