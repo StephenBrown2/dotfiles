@@ -26,7 +26,7 @@ else
     zplug "plugins/httpie",                    from:oh-my-zsh
     zplug "plugins/lol",                       from:oh-my-zsh
     zplug "plugins/man",                       from:oh-my-zsh
-    zplug "plugins/pyenv",                     from:oh-my-zsh
+    #zplug "plugins/pyenv",                     from:oh-my-zsh
     zplug "plugins/python",                    from:oh-my-zsh
     zplug "plugins/rebar",                     from:oh-my-zsh
     zplug "plugins/sublime",                   from:oh-my-zsh
@@ -35,7 +35,7 @@ else
     zplug "plugins/vagrant",                   from:oh-my-zsh
     zplug "plugins/wakeonlan",                 from:oh-my-zsh
     zplug "plugins/z",                         from:oh-my-zsh
-    zplug "rimraf/k",                          from:github
+    zplug "supercrabtree/k",                   from:github
     zplug "unixorn/git-extra-commands",        from:github
     zplug "zsh-users/zsh-completions",         from:github
     zplug "zsh-users/zsh-syntax-highlighting", from:github, defer:3

@@ -1,33 +1,29 @@
-pathmunge () {
-  if [ -d "$1" ]; then
-    if ! echo $PATH | /bin/egrep -q "(^|:)$1($|:)" ; then
-      if [ "$2" = "after" ] ; then
-        PATH=$PATH:$1
-      else
-        PATH=$1:$PATH
-      fi
-    fi
-  fi
-  export PATH=$(echo "$PATH" | awk -v RS=':' -v ORS=":" \
-         '!a[$1]++{if (NR > 1) printf ORS; printf $a[$1]}')
-}
-
 export USER=$(whoami)
-export HOME=/home/$USER
-pathmunge $HOME/.local/bin
-export XDG_CONFIG_HOME=$HOME/.config
-export ZPLUG_HOME=$XDG_CONFIG_HOME/zplug
-export ZDOTDIR=$XDG_CONFIG_HOME/zsh
+export HOME=/home/${USER}
+export XDG_CONFIG_HOME=${HOME}/.config
+export ZPLUG_HOME=${XDG_CONFIG_HOME}/zplug
 
-# Get around zsh preferring dotted files by sourcing them ourself
-if [[ -o login ]] && [[ -f $ZDOTDIR/zprofile ]]; then
-  source $ZDOTDIR/zprofile
-fi
+export ZDOTDIR=${XDG_CONFIG_HOME}/zsh
 
-if [[ -o interactive ]] && [[ -f $ZDOTDIR/zshrc ]]; then
-  source $ZDOTDIR/zshrc
-fi
+export SSH_ASKPASS=/usr/lib/ssh/x11-ssh-askpass
 
-if [[ -o login ]] && [[ -f $ZDOTDIR/zlogin ]]; then
-  source $ZDOTDIR/zlogin
-fi
+export TIME_STYLE=long-iso
+
+export GIT_PS1_SHOWDIRTYSTATE=true
+export GIT_PS1_SHOWSTASHSTATE=true
+export GIT_PS1_SHOWUNTRACKEDFILES=true
+export GIT_PS1_SHOWUPSTREAM='verbose'
+export GIT_PS1_DESCRIBE_STYLE='branch'
+export GIT_PS1_SHOWCOLORHINTS=true
+export GIT_PS1_HIDE_IF_PWD_IGNORED=true
+
+export EDITOR=vim
+export VISUAL=vim
+
+export XZ_OPT="--threads=0"
+
+export SLACK_CLI_TOKEN=
+
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/dev
+source /usr/bin/virtualenvwrapper.sh

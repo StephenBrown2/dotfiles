@@ -1,0 +1,79 @@
+# Basically zshrc
+
+# Initialize colors.
+autoload -U colors
+colors
+
+# Allow for functions in the prompt.
+setopt PROMPT_SUBST
+
+# Allow for checking the version of ZSH
+autoload -U is-at-least
+
+# Taken from http://askubuntu.com/questions/1577/moving-from-bash-to-zsh
+
+zmodload zsh/complist
+
+# More extensive tab completion (necessary for fish_dir tab completion)
+autoload -U compinit
+compinit
+
+# Tab completion from both ends
+setopt completeinword
+
+# Set rehashing to be automatic
+zstyle ':completion:*' rehash true
+
+# Enable Menu select for completions with more than 10 options
+zstyle ':completion:*' menu select=10
+
+# Tab completion should be case-insensitive
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
+# Better completion for killall.
+zstyle ':completion:*:killall:*' command 'ps -u $USER -o cmd'
+
+# Changes the definition of "word", e.g. with ^W
+autoload select-word-style
+select-word-style shell
+
+# History file options
+HISTFILE=~/.history
+HISTSIZE=SAVEHIST=10000
+setopt incappendhistory
+setopt sharehistory
+setopt extendedhistory
+
+# Glob options
+setopt extendedglob
+unsetopt caseglob
+
+# Remember command in history without executing
+setopt interactivecomments
+
+# cd to dir without using cd
+setopt auto_cd
+
+# Display CPU usage stats for commands taking more than 10 seconds
+REPORTTIME=10
+
+# Insert sudo at beginning of line with a keystroke
+insert_sudo() {
+  zle beginning-of-line; zle -U "sudo ";
+}
+zle -N insert-sudo insert_sudo
+bindkey "^k" insert-sudo
+
+# Function to add dir in history upon changing dir
+autoload -U add-zsh-hook
+add-zsh-hook precmd precmd_add_dir_to_history
+
+if [[ -f /usr/share/doc/pkgfile/command-not-found.zsh ]]; then
+  source /usr/share/doc/pkgfile/command-not-found.zsh
+fi
+
+if [[ -f $XDG_CONFIG_HOME/rack/commandcompletion_bash.sh ]]; then
+  autoload bashcompinit
+  bashcompinit
+  source $XDG_CONFIG_HOME/rack/commandcompletion_bash.sh
+fi

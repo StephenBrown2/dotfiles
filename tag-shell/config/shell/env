@@ -10,3 +10,5 @@ export EDITOR=vim
 export VISUAL=vim
 
 source $HOME/.config/shell/xdg
+
+export PATH=${PATH}:${HOME}/.local/bin

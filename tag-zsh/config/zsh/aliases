@@ -1,0 +1,34 @@
+# ~/.sh_aliases
+
+# User-specific aliases to be used in a bash or zsh session
+
+alias groot='cd ./$(git rev-parse --show-cdup)'
+alias gti='git'
+alias rm='rm -i'
+alias cx='clear'
+alias cp='cp -i'
+alias mv='mv -i'
+alias l.='exa -d .*'
+alias ll='exa -lhH --git --time-style=long-iso'
+alias ls='exa -F'
+alias allcron='sudo cut -d: -f1 /etc/passwd | grep -vE "#" | while read user; do echo -e "\nCrontab for $user:"; sudo crontab -u$user -li; done'
+alias d8='date --iso-8601'
+alias d8h='date --iso-8601=hour'
+alias d8m='date --iso-8601=minute'
+alias d8s='date --iso-8601=second'
+alias d8t='date +%FT%T'
+alias d8ts='date +%FT%T | sed "s/:/-/g"'
+alias hist='history | less'
+alias alist='alias'
+alias motd='cat /etc/motd'
+alias lss='pwd & ls -liAh'
+alias cdd='cd $1 & ls -liAh'
+alias matrix='echo -ne "\e[32m" ; while true ; do echo -ne "\e[$(($RANDOM % 2 ));32m\]" ; tr -c "[:print:]" " " < /dev/urandom | dd count=1 bs=50 2> /dev/null ; done'
+alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
+alias ots='ht --sudo-make-me-a-sandwich --gateway-auth'
+alias zuffa="ht 294987 --sudo-make-me-a-sandwich -C '/root/ss.sh'"
+alias startladder='cd ~/git/rack/iawl/stepladder/misc/dev && sudo -E ./run.sh'
+
+# Package management aliases
+alias i='pacaur -S'
+alias up='pacaur -Syyu'
