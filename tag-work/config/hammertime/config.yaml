@@ -1,18 +1,23 @@
+authentication:
+  gateway_auth: false
+  intensive_ad_become_root: true
+  username: step7212
+  balabit: true
 misc:
-  auto_exit: no
-  use_autorun: no
-  show_passwords: yes
+  auto_exit: false
+  default_action: login
+  expect_sleep: 1
   expect_timeout: 60
-  nailsURL: http://nails.rackersupport.com
-  assumerdpwin: yes
+  info_summary: true
+  show_passwords: true
+  use_autorun: false
 terminal:
+  bastionKeyFile: ~/.ssh/rsbastion.key
   expect_path: /usr/bin/expect
+  max_concurrent_logins: 9
+  prompt: fancy
+  show_motd: true
   terminal: tmux
   tmux_layout: tiled
   tmux_max_panes: 9
-  use_colors: yes
-  rdpwin_path: /home/stephen/.local/bin/rdpwin
-authentication:
-  intensive_ad_become_root: yes
-  username: step7212
-  browser: firefox
+  use_colors: true
