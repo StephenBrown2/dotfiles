@@ -1,0 +1,12 @@
+; generated_rule 3-3-clivis
+( if
+( begin
+( is ( application_name ) "vis" )
+)
+( begin
+( println "Matched vis" )
+( unmaximize )
+( geometry "1055x130+1440+820" )
+( println "Placed vis" )
+)
+)

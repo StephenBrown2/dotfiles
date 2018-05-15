@@ -1,0 +1,13 @@
+; generated_rule 3-2-gtop
+( if
+( begin
+( contains ( application_name ) "gtop" )
+( is ( window_name ) "gtop" )
+)
+( begin
+( println "Matched gtop" )
+( unmaximize )
+( geometry "1050x700+1440+1000" )
+( println "Placed gtop" )
+)
+)

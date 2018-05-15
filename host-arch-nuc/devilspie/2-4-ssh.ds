@@ -1,0 +1,13 @@
+; generated_rule 3-2-gtop
+( if
+( begin
+( contains ( application_name ) "ssh" )
+( is ( window_name ) "ssh" )
+)
+( begin
+( println "Matched ssh proxy window" )
+( unmaximize )
+( geometry "1050x525+1440+0" )
+( println "Placed sshwindo" )
+)
+)

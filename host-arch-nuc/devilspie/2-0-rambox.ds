@@ -1,12 +1,14 @@
 ; generated_rule 3-1-rambox
-( if 
-( begin 
+( if
+( begin
 ( is ( window_role ) "browser-window" )
 ( contains ( window_class ) "Rambox" )
 ( contains ( window_name ) "Rambox" )
-) 
-( begin 
-( geometry "1120x1019+3350+0" )
-( println "match" )
+)
+( begin
+( println "Matched Rambox" )
+( unmaximize )
+( geometry "1050x815+1440+0" )
+( println "Placed Rambox" )
 )
 )

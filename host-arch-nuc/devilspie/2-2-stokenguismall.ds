@@ -1,0 +1,13 @@
+; generated_rule 3-4-stokenguismall
+( if
+( begin
+( is ( application_name ) "stoken-gui" )
+( is ( window_name ) "Software Token" )
+)
+( begin
+( println "Matched Stoken" )
+( geometry "161x92+2340+840" )
+( above )
+( println "Placed Stoken" )
+)
+)

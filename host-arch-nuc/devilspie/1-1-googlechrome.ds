@@ -1,0 +1,16 @@
+; generated_rule 2-0-googlechrome
+( if
+( begin
+( is ( window_role ) "browser" )
+( contains ( window_class ) "google-chrome" )
+( contains ( application_name ) "Google Chrome" )
+)
+( begin
+( println "Matched Google Chrome" )
+( unmaximize )
+( geometry "1400x800+0+0" )
+( println "Moving Chrome to top-left" )
+( maximize )
+( println "Maximizing Chrome" )
+)
+)

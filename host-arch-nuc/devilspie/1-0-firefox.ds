@@ -2,11 +2,14 @@
 ( if 
 ( begin 
 ( is ( window_role ) "browser" )
-( contains ( window_class ) "Firefox" )
-( contains ( window_name ) "Mozilla Firefox" )
+( is ( application_name ) "Firefox" )
 ) 
 ( begin 
+( println "Matched Firefox" )
+( unmaximize )
+( geometry "1400x800+0+0" )
+( println "Moving Firefox to top-left" )
 ( maximize )
-( println "match" )
+( println "Maximizing Firefox" )
 )
 )
