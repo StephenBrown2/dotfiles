@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+AUTHNETBIN='/home/stephen/.local/bin/authnet.sh'
+DCS=($($AUTHNETBIN | grep -o -P '(?<=\[)[[:alnum:],]+(?=\])' | tr ',' ' '))
+for dc in ${DCS[@]}; do
+    echo;
+    if $AUTHNETBIN -sd $dc; then
+        $AUTHNETBIN -svd $dc;
+    else
+	$AUTHNETBIN -lvd $dc;
+	for i in {1..65}; do
+	    if [ $(date +'%S') == '01' ] || [ "$dc" == "${DCS[-1]}" ]; then
+                break;
+	    else
+	        echo -n ".";
+	        sleep 1;
+            fi;
+        done;
+	echo
+    fi
+done
