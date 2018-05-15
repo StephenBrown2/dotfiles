@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+NOW=$(date +%Y%m%d%H%M)
+LASTSTOKEN=$((${NOW} - 1))
+if [ -t 1 ]; then ISTERM=1; else ISTERM=0; fi
+if [ -f /tmp/stoken.last ]; then
+  source /tmp/stoken.last
+else
+  echo "LASTSTOKEN=${NOW}" > /tmp/stoken.last
+fi
+
+if (( "${LASTSTOKEN}" >= "${NOW}" )); then
+  yad --timeout=$(( 60 - $(date +%S))) --timeout-indicator=bottom --text='Wait for next token...' --text-align=center --borders=15 --no-buttons --on-top --undecorated
+  #while (( "$(date +%Y%m%d%H%M)" <= "${LASTSTOKEN}" )); do
+  #  # echo -n '.' >&2
+  #  if [ ${ISTERM} -eq 1 ]; then echo -en "\r\e[0K$((60 - $(date +%-S) ))" >&2; fi
+  #  sleep 1
+  #done
+  #if [ ${ISTERM} -eq 1 ]; then echo -en "\e[0K\r"; fi
+  #sleep 1
+fi
+echo "LASTSTOKEN=$(date +%Y%m%d%H%M)" > /tmp/stoken.last
+stoken
