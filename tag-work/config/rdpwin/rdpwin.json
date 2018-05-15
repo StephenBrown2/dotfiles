@@ -1,7 +1,7 @@
 {
-    "authnet_bin": "$(which authnet.sh 2>/dev/null)",
+    "authnet_bin": "/home/stephen/.local/bin/authnet.sh",
     "debug": false,
-    "intensify_bin": "$(which intensify 2>/dev/null)",
+    "intensify_bin": "/usr/bin/intensify",
     "intensify_opts": "--sso step7212",
     "isoshare": "${HOME}/iso",
     "rax_default_dc": "dfw1",
