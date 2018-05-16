@@ -1,26 +1,41 @@
 #!/usr/bin/env bash
 source /etc/os-release
 
-logfile="$HOME/workstart/$(date +%F).log";
-touch $logfile
+logfile="${HOME}/workstart/$(date +%F).log";
+touch "${logfile}"
 
 function log() {
-  echo "$@" | tee -a $logfile;
+  echo "$@" | tee -a "${logfile}";
 }
-cpus=$(grep -c process /proc/cpuinfo)
-calm=$(echo ${cpus}/2 | bc)
-load=$(awk '{print $1}' /proc/loadavg);
-l=${load%.*};
-while [ ${l} -gt ${calm} ]; do
-  uptime;
-  log 'waiting for system to calm down...';
-  sleep 5;
-  load=$(awk '{print $1}' /proc/loadavg);
-  l=${load%.*};
-done
-uptime | tee -a $logfile;
+uptime | tee -a "${logfile}";
+# Bring the ethernet connection up
+#nmcli connection up c471d245-96b8-3e08-90e9-94263b589b00 passwd-file /home/stephen/.802-1x.password --ask
+#if [[ $(nmcli device show eno1 | awk '/GENERAL.STATE/{print $NF}') != '(connected)' ]]; then
+#  if ! nmcli connection up c471d245-96b8-3e08-90e9-94263b589b00 passwd-file /home/stephen/.802-1x.password --ask; then
+#    echo "Could not bring connection up. Retry and run this script again"
+#    exit
+#  fi
+#fi
+#if [[ ${SLACK_CLI_TOKEN} ]]; then
+#RANDOM=$$$(date +%s)
+#greetings=('Getting started on the day.' 'Good day!' 'Time to get started on the day.' 'Greetings and salutations!')
+#greeting=${greetings[$[${RANDOM} % ${#greetings} + 1]]}
+#if [ ! -f ~/.reboot-required ]; then
+#  /home/stephen/.local/bin/slack-cli chat send "Present. ${1:-${greeting}}" '#team-ratchet-lin'
+#fi
+
 if (( $(date +%w) >= 0 )); then
-  if [ $ID == "ubuntu" ]; then
+    if [[ "${XDG_CURRENT_DESKTOP}" =~ [Cc]innamon ]]; then
+      devilspie &
+    elif [[ "${XDG_CURRENT_DESKTOP}" =~ i3 ]]; then
+      echo "Running i3, setting up the layouts"
+      i3-msg "workspace 1:; append_layout ~/.config/i3/work-workspace-1.json"
+      i3-msg "workspace 2:; append_layout ~/.config/i3/work-workspace-2.json"
+      i3-msg "workspace 3:; append_layout ~/.config/i3/work-workspace-3.json"
+    else
+      echo "You're running ${XDG_CURRENT_DESKTOP}? Lay it out yourself."
+    fi
+  if [ "${ID}" == "ubuntu" ]; then
     sudo aptitude update && sudo aptitude upgrade -y
     if [ -f /var/run/reboot-required ]; then
       cat /var/run/reboot-required
@@ -30,106 +45,134 @@ if (( $(date +%w) >= 0 )); then
       sleep 10
       /usr/bin/cinnamon-session-quit --reboot
     fi
-  elif [ $ID == "arch" ]; then
-    apacman --quickcheck | grep linux && REBOOT=true || REBOOT=false
-    pacaur -Syyu --needed --devel
-    if [[ $REBOOT == true ]]; then
-      shutdown -r 10 'Reboot because kernel update'
-    fi
-    if [[ $DESKTOP_SESSION == 'cinnamon' ]]; then
-      devilspie &
-    elif [[ $DESKTOP_SESSION == 'i3' ]]; then
-      echo "Running i3, setting up the layouts"
-      i3-msg "workspace 1:; append_layout ~/.config/i3/work-workspace-1.json"
-      i3-msg "workspace 2:; append_layout ~/.config/i3/work-workspace-2.json"
-      i3-msg "workspace 3:; append_layout ~/.config/i3/work-workspace-3.json"
+  elif [ "${ID}" == "arch" ]; then
+    if checkupdates | grep -q linux; then
+      REBOOT=true
+      checkupdates | grep linux | tee ~/.reboot-required
     else
-      echo "You're running sway, aren't you? Lay it out yourself."
+      REBOOT=false
+      if [[ -f ~/.reboot-required ]]; then
+        rm ~/.reboot-required
+      fi
+    fi
+    yay -Syyu --needed --devel
+    if [[ "${REBOOT}" == true ]]; then
+      if [[ "${XDG_CURRENT_DESKTOP}" =~ [Cc]innamon ]]; then
+        cinnamon-session-quit --reboot --no-prompt
+      else
+        shutdown -r 10 'Reboot because kernel update'
+      fi
+      exit
     fi
   else
-    echo "I don't know what $ID is, so I can't update it."
+    echo "I don't know what ${ID} is, so I can't update it."
   fi
 fi
+
+cpus=$(grep -c process /proc/cpuinfo)
+calm=$(echo "${cpus}/2" | bc)
+load=$(awk '{print $1}' /proc/loadavg);
+l=${load%.*};
+while [ "${l}" -gt "${calm}" ]; do
+  uptime;
+  log 'waiting for system to calm down...';
+  sleep 5;
+  load=$(awk '{print $1}' /proc/loadavg);
+  l=${load%.*};
+done
+
+source /usr/share/zsh/scripts/zplug/init.zsh
+type zplug > /dev/null && zplug update
 echo
 log 'Is the internet on fire?';
 dig +short txt istheinternetonfire.com
+
+log 'starting rambox'
+pgrep rambox || rambox &
+
+log 'starting stoken-gui'
+pgrep stoken || stoken-gui --small &
+
+log 'starting Chrome';
+
+for dc in iad ord; do
+    echo "Authing to ${dc} firewall...";
+    authnet.sh -d "${dc}" -l -u step7212 -v && sleep 5 || echo "Whoops, try ${dc} again later";
+done
+
 log 'getting intensive password';
 intensify --sso step7212
-#python -c "import keyring;print keyring.set_password('racker', 'intensive_password', '$(intensify --sso step7212)')" >/dev/null
-#echo $(python -c "import keyring;print keyring.get_password('racker', 'intensive_password')")
-#log 'setting up ssh proxy';
-log 'setting up dfw bastion proxy';
-for dc in dfw; do
-    echo "Authing to $dc firewall...";
-    authnet.sh -d $dc -l -u step7212 -v && sleep 5 || echo "Whoops, try $dc again later";
-done
-#pgrep bastion || urxvt +sb -depth 32 -foreground '#B0B0B0' -background rgba:2000/2000/2000/aaaa -fn 'xft:DejaVu Sans Mono:pixelsize=10' -name bastion -e ssh bastion &
-ps fawux | grep '[b]astion' || urxvt +sb -depth 32 -foreground '#B0B0B0' -background rgba:2000/2000/2000/aaaa -name bastion -e ssh bastion &
 
+log 'starting bastion connection';
+pgrep -f bastion || urxvt +sb -depth 32 -foreground '#B0B0B0' -background rgba:2000/2000/2000/aaaa -name bastion -e ssh bastion &
 sleep 5;
-#log 'checking mountpoint';
-#( mountpoint '/media/stephen/Data' && VBoxManage startvm --type gui 632f2be0-2865-4b06-a527-b5a8c3dcd424 & ) | tee -a $logfile
-#echo 'Starting OWA';
-#google-chrome &
-#log 'starting autokey';
-#/home/stephen/.local/bin/autokey-gtk 2>/dev/null &
-sleep 5;
-log 'starting Shutter';
-pgrep shutter || shutter --min_at_startup 2>/dev/null &
-sleep 5;
-log 'starting Pidgin';
-pgrep pidgin || pidgin &
-sleep 5;
-log 'starting Slack';
-pgrep slack || slack &
-sleep 5;
-log 'starting go-nucleus-agent';
-if [[ ! $(pgrep go-nucleus) ]]; then
-  cd ~/gocode
-  export GOPATH=`pwd`
-  go get github.com/boltdb/bolt/
-  cd src/go-nucleus-agent
-  git pull
-  go run ${GOPATH}/src/go-nucleus-agent/go-nucleus-agent.go -profile `ls -d ~/.mozilla/firefox/*.default` -terminal-path=terminator  -terminal-args=-x >/var/log/fission.log &
-fi
-log 'starting Firefox';
-pgrep firefox || firefox 1>&2 2>/dev/null &
-sleep 5;
-log 'starting Chromium';
-#google-chrome-unstable --proxy-server="socks://localhost:4444" 2>/dev/null &
-pgrep chromium || chromium 2>/dev/null &
+#log 'starting Shutter';
+#pgrep shutter || shutter --min_at_startup &>/dev/null &
 #sleep 5;
-#log 'Smartsheet Chromium App'
-#/usr/bin/chromium --profile-directory=Default --app-id=alehdleagcgnimdipdmllebddejplpbi &
+#log 'starting Pidgin';
+#pgrep pidgin || pidgin &
+#sleep 5;
+#log 'starting Slack';
+#pgrep slack || slack &
+#pgrep 'slack|scudcloud' || gtk-launch scudcloud.desktop &>/dev/null &
+#sleep 5;
+systemctl --no-pager --user status go-nuclear-agent.service || systemctl --no-pager --user start go-nuclear-agent.service
+if [[ ! $(pgrep go-nucle) ]]; then
+  cd ~/gocode || ( mkdir ~/gocode && cd ~/gocode || exit )
+  GOPATH=$(pwd)
+  export GOPATH
+  go get github.com/mitchellh/go-homedir
+  go get github.com/howeyc/gopass
+  go get github.com/mxk/go-sqlite/sqlite3
+  cd src/go-nucleus-agent || cd src && git clone git@github.rackspace.com:Linux-2nd-Austin/go-nucleus-agent.git
+  git pull
+  go run ${GOPATH}/src/go-nucleus-agent/go-nucleus-agent.go -terminal-path=terminator  -terminal-args=-x >/var/log/fission.log &
+fi
 
-log 'Google Play Music'
-#/usr/bin/chromium --profile-directory=Default --app-id=fahmaaghhglfmonjliepjlchgpgfmobi &
-# cd /home/stephen/src/Google-Play-Music-Desktop-Player-UNOFFICIAL- && git pull && rm -rf node_modules && npm install && npm run build && npm start &
-pgrep Google || gpmdp &
+echo 'How many sts.rackspace.com cookies in Firefox?'
+for profile in $(cat ~/.mozilla/firefox/profiles.ini | grep Path | cut -d= -f2); do
+echo "${profile}"
+sqlite3 ~/.mozilla/firefox/${profile}/cookies.sqlite 'SELECT COUNT(*) FROM moz_cookies WHERE host LIKE "%sts.rackspace.com%";'
+done
+sleep 3;
+
+log 'starting Firefox';
+pgrep firefox || firefox &>/dev/null &
+sleep 5;
+
+echo 'How many sts.rackspace.com cookies in Chrome?'
+echo 'Default:'
+sqlite3 ~/.config/google-chrome/Default/Cookies 'SELECT COUNT(*) FROM cookies WHERE host_key LIKE "%sts.rackspace.com%";'
+echo 'Profile 1:'
+sqlite3 ~/.config/google-chrome/Profile\ 1/Cookies 'SELECT COUNT(*) FROM cookies WHERE host_key LIKE "%sts.rackspace.com%";'
+echo 'Profile 2:'
+sqlite3 ~/.config/google-chrome/Profile\ 2/Cookies 'SELECT COUNT(*) FROM cookies WHERE host_key LIKE "%sts.rackspace.com%";'
+sleep 3;
+
+pgrep google-chrome || google-chrome-stable --profile-directory='Profile 2' 2>/dev/null &
+
+log 'Terminal system visualizer'
+pgrep -f gtop || urxvt +sb -depth 32 -foreground '#B0B0B0' -background rgba:2000/2000/2000/aaaa -name gtop -e gtop &
+
+sleep 5
 
 log 'Terminal audio visualizer'
-#termite -e cava -t cava -c ~/.config/termite/config.cava --geometry=540x296 &
 pgrep vis || urxvt +sb -depth 32 -foreground '#B0B0B0' -background rgba:2000/2000/2000/aaaa -fn 'xft:DejaVu Sans Mono:pixelsize=2' -geometry 179x98 -name visualizer -e vis &
 
-log 'Google Hangouts Chromium App'
-/usr/bin/chromium --profile-directory=Default --app-id=knipolnnllmklapflnccelgolnpehhpl &
 sleep 5
 log 'starting Sublime';
-pgrep subl3 || subl3 2>/dev/null &
-#sleep 5;
-#log 'starting away-on-lock script'
-#/home/stephen/src/aol.py &
-log 'setting up the other bastion proxies';
-for dc in hkg iad lon3 lon5 ord syd; do
-    echo "Authing to $dc firewall...";
-    authnet.sh -d $dc -l -u step7212 -v \
-    && sleep 60 || echo "Whoops, try $dc again later";
-done
-sleep 120;
-if [[ $DESKTOP_SESSION == 'cinnamon' ]]; then
+pgrep subl3 || subl3 &>/dev/null &
+
+log 'starting Zoom';
+pgrep zoom || gtk-launch Zoom.desktop &>/dev/null &
+
+#log 'setting up the other bastion proxies';
+#~/.local/bin/authall
+if [[ "${XDG_CURRENT_DESKTOP}" =~ [Cc]innamon ]]; then
     # Retile windows, just in case
     devilspie -a &
     # Kill dat proc
-    [ $(pgrep devilspie | wc -l) -gt 1 ] && kill $(pgrep devilspie | tail -1)
+    pkill devilspie
 fi
 log 'done!'
+exit
