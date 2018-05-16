@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+# dot-prefixed files are skipped unless explicitly named
+rcup -vK config/zsh/{.zprofile,.zshenv,.zshrc}
