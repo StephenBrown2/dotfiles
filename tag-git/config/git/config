@@ -3,14 +3,15 @@
   email = Stephen.Brown2@gmail.com
 
 [core]
-  editor = /usr/bin/vim
   autocrlf = input
+  editor = /usr/bin/vim
+  excludesfile = ~/.config/git/ignore
 
 [help]
-  autocorrect = 10
+  autocorrect = 25
 
 [color]
-  ui = true
+  ui = auto
   branch = auto
   diff = auto
   status = auto
@@ -25,6 +26,7 @@
   frag = magenta bold
   old = red bold
   new = green bold
+  whitespace = red reverse
 
 [color "status"]
   added = yellow
@@ -32,21 +34,86 @@
   untracked = cyan
 
 [alias]
+  # basic aliases
   st = status
-  ci = commit
+  wl = worktree list
+  cl = clone
   co = checkout
-  di = diff
-  dc = diff --cached
-  amend = commit --amend
-  aa = add --all
-  ff = merge --ff-only
-  pullff = pull --ff-only
-  noff = merge --no-ff
+  cp = cherry-pick
   fa = fetch --all
+  ff = merge --ff-only
+  noff = merge --no-ff
   pom = push origin master
+  pullff = pull --ff-only
+  pushf = push --force-with-lease
+  prune = fetch --prune
+  undo = reset --soft HEAD^
+  stash-all = stash save --include-untracked
+
+  # add aliases
+  aa = add --all
+  ai = add --interactive
+
+  # branch aliases
   b = branch
-  ds = diff --stat=160,120
+  br = branch
+  branch = branch -ra
+
+  # commit aliases
+  amend = commit --amend
+  ca = commit --amend
+  caa = commit -a --amend -C HEAD
+  ci = commit
+  cm = commit -m
+  cma = commit -a -m
+
+  # diff aliases
+  d = diff
+  dc = diff --cached
+	dh = diff --histogram
+	dk = diff --check
+	dp = diff --patience
+  dt = difftool
   dh1 = diff HEAD~1
+  diff = diff --word-diff
+  diffr  = "!f() { git diff "$1"^.."$1"; }; f"
+  dlc = diff --cached HEAD^
+  dr  = "!f() { git diff "$1"^.."$1"; }; f"
+  ds = diff --stat=160,120
+
+  # find files by name
+  f = "!git ls-files | grep -i"
+
+  # search in files
+  gr = grep -Ii
+  rg = "!f() { rg "$1" $(git ls-files); }; f"
+
+  # list aliases
+  la = "!git config -l | grep alias | cut -c 7-"
+  aliases = "!git config -l | grep alias | cut -c 7-"
+
+  # reset aliases
+  r = reset
+  r1 = reset HEAD^
+  r2 = reset HEAD^^
+  rh = reset --hard
+  rh1 = reset HEAD^ --hard
+  rh2 = reset HEAD^^ --hard
+
+  # stash aliases
+  sa = stash apply
+  sl = stash list
+  ss = stash save
+
+  # submodule aliases
+  subup = submodule update --init --recursive
+	subpull = !git submodule foreach git pull --tags origin master
+
+  # rev-{parse,list} aliases
+  bc = rev-parse --abbrev-ref HEAD
+	bu = !git rev-parse --abbrev-ref --symbolic-full-name "@{u}"
+  behind = !git rev-list --left-only --count $(git bu)...HEAD
+	ahead = !git rev-list --right-only --count $(git bu)...HEAD
 
   # Divergence (commits we added and commits remote added)
   div = divergence
@@ -72,6 +139,10 @@
   la = !git l --all
   lg = !git l --graph
   lgh = "!git l --graph | head"
+  ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --compact-summary
+  dl = "!git ll -1"
+  fl = log -u
+  lc  = "!f() { git ll "$1"^.."$1"; }; f"
 
   # rack alias for internal github
   rack = !GITHUB_HOST=github.rackspace.com hub
@@ -81,15 +152,110 @@
 
 [merge]
   tool = meld
+  ff = only
+  # I pretty much never mean to do a real merge, since I use a rebase workflow.
+  # Note: this spherical option applies to all merges, including those done during a git pull
+  # https://git-scm.com/docs/git-config#git-config-mergeff
+
+  conflictstyle = diff3
+  # Standard diff is two sets of final changes. This introduces the original text before each side's changes.
+  # https://git-scm.com/docs/git-config#git-config-mergeconflictStyle
 
 [mergetool "meld"]
   path = /usr/bin/meld
 
 [diff]
+  mnemonicprefix = true
+  renames = true
+  submodule = log
   tool = meld
 
 [difftool]
   prompt = false
 
+[difftool "icdiff"]
+  cmd = /usr/local/bin/icdiff --line-numbers $LOCAL $REMOTE
+
+[fetch]
+	# Auto-fetch submodule changes (sadly, won't auto-update)
+	recurseSubmodules = on-demand
+
 [push]
-  default = simple
+  followTags = true
+  # Because I get sick of telling git to do it manually
+  # https://git-scm.com/docs/git-config#git-config-pushfollowTags
+
+[grep]
+	# Consider most regexes to be ERE
+	extendedRegexp = true
+
+[log]
+	# Use abbrev SHAs whenever possible/relevant instead of full 40 chars
+	abbrevCommit = true
+	# Automatically --follow when given a single path
+	follow = true
+
+[status]
+	# Display submodule rev change summaries in status
+	submoduleSummary = true
+	# Recursively traverse untracked directories to display all contents
+	showUntrackedFiles = all
+
+[tag]
+	# Sort tags as version numbers whenever applicable, so 1.10.2 is AFTER 1.2.0.
+	sort = version:refname
+
+[versionsort]
+	prereleaseSuffix = -pre
+	prereleaseSuffix = .pre
+	prereleaseSuffix = -beta
+	prereleaseSuffix = .beta
+	prereleaseSuffix = -rc
+	prereleaseSuffix = .rc
+	prereleaseSuffix = -dev
+	prereleaseSuffix = .dev
+
+[transfer]
+  fsckobjects = true
+  # To combat repository corruption!
+  # Note: this spherical option applies during receive and transmit
+  # https://git-scm.com/docs/git-config#git-config-transferfsckObjects
+  # via https://groups.google.com/forum/#!topic/binary-transparency/f-BI4o8HZW0
+
+[web]
+	browser = google-chrome
+
+[mergetool]
+	# Clean up backup files created by merge tools on tool exit
+	keepBackup = false
+	# Clean up temp files created by merge tools on tool exit
+	keepTemporaries = false
+	# Put the temp files in a dedicated dir anyway
+	writeToTemp = true
+	# Auto-accept file prompts when launching merge tools
+	prompt = false
+
+[rerere]
+  enabled = false
+
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
+
+[secrets]
+	providers = git secrets --aws-provider
+	patterns = AKIA[0-9A-Z]{16}
+	patterns = (\"|')?(AWS|aws|Aws)?_?(SECRET|secret|Secret)?_?(ACCESS|access|Access)?_?(KEY|key|Key)(\"|')?\\s*(:|=>|=)\\s*(\"|')?[A-Za-z0-9/\\+=]{40}(\"|')?
+	patterns = (\"|')?(AWS|aws|Aws)?_?(ACCOUNT|account|Account)_?(ID|id|Id)?(\"|')?\\s*(:|=>|=)\\s*(\"|')?[0-9]{4}\\-?[0-9]{4}\\-?[0-9]{4}(\"|')?
+	allowed = AKIAIOSFODNN7EXAMPLE
+	allowed = wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+  patterns = [-]{5}BEGIN.*PRIVATE\\sKEY.*[-]{5}
+  patterns = [s|S][e|E][c|C][r|R][e|E][t|T].*(['|\"])?[0-9a-zA-Z]{32,45}(['|\"])?
+  patterns = [f|F][a|A][c|C][e|E][b|B][o|O][o|O][k|K].*(['|\"])?[0-9a-f]{32}(['|\"])?
+  patterns = [g|G][i|I][t|T][h|H][u|U][b|B].*([c|C][l|L][i|I][e|E][n|N][T|T]([_])?[s|S][e|E][c|C][r|R][e|E][t|T])?.*(['|\"])?[0-9a-zA-Z]{35,40}(['|\"])?
+  patterns = [c|C][l|L][i|I][e|E][n|N][T|T]([_])?[s|S][e|E][c|C][r|R][e|E][t|T].*[:].*(['|\"])?[a-zA-Z0-9_-]{24}(['|\"])?
+  patterns = [h|H][e|E][r|R][o|O][k|K][u|U].*(['|\"])?[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}(['|\"])?
+  patterns = xox[p|b|o|a]-[0-9]{12}-[0-9]{12}-[0-9]{12}-[a-z0-9]{32}
+  patterns = [t|T][w|W][i|I][t|T][t|T][e|E][r|R].*(['|\"])?[0-9a-zA-Z]{35,44}(['|\"])?
+
