@@ -170,7 +170,7 @@ pgrep zoom || gtk-launch Zoom.desktop &>/dev/null &
 #~/.local/bin/authall
 if [[ "${XDG_CURRENT_DESKTOP}" =~ [Cc]innamon ]]; then
     # Retile windows, just in case
-    devilspie -a &
+    pgrep devilspie || devilspie -a &
     # Kill dat proc
     pkill devilspie
 fi
