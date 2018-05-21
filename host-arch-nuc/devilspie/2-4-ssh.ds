@@ -8,6 +8,6 @@
 ( println "Matched ssh proxy window" )
 ( unmaximize )
 ( geometry "1050x525+1440+0" )
-( println "Placed sshwindo" )
+( println "Placed ssh window" )
 )
 )
